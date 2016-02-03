@@ -1,0 +1,60 @@
+<?php
+/**
+ * Created by PhpStorm.
+ * User: Asiman
+ * Date: 01.02.2016
+ * Time: 20:11
+ */
+
+session_set_cookie_params(0);
+session_start();
+
+ $mysqli = new mysqli("localhost", "u608271277_root", "bestpass", "u608271277_tests");
+
+/* проверка соединения */
+if ($mysqli->connect_errno) {
+    printf("Не удалось подключиться: %s\n", $mysqli->connect_error);
+    exit();
+}
+
+function posts($mysqli, $query){
+    $result = $mysqli->query($query);
+    $array_tasks = array();
+    while ($data = mysqli_fetch_assoc($result)) {
+        $array_tasks[] = $data;
+    }
+    echo json_encode($array_tasks);
+}
+
+if (isset($_POST['taskname'])) {
+    $query = "SELECT task_name,f_name, l_name, rating FROM tasks,students, students_tasks WHERE students_tasks.task_id = (SELECT task_id FROM tasks WHERE task_name='" . $_POST['taskname'] . "') AND students.student_id = students_tasks.student_id AND students_tasks.task_id = tasks.task_id";
+    posts($mysqli, $query);
+} else if (isset($_POST['alltasks'])) {
+    $query = "SELECT task_name, task_type, create_date FROM tasks WHERE teacher_id = (SELECT teacher_id FROM teachers WHERE login = '" . $_SESSION['loginTeacher'] . "')";
+    posts($mysqli, $query);
+} else if (isset($_POST['groupstasks'])) {
+    //получаю все id заданий, который выполнялись указанной группой
+    $query = "SELECT task_id FROM groups_tasks WHERE group_id = (SELECT group_id FROM groups WHERE group_name ='".$_POST['groupstasks']."')";
+    $result = $mysqli->query($query);
+    $array_tasks = array();
+    $query = "";
+    while ($data = mysqli_fetch_assoc($result)) {
+        //объединяю строки для получения запроса, в котором будет учавствовать сразу несколько тестов по разным id
+        $query .= "SELECT task_name, task_type, create_date FROM tasks WHERE task_id = '".$data['task_id']."' UNION ";
+    }
+    if(strlen($query) > 0) { //запрос может получиться пустым, если с указанной группой нет работ, что может привезти к ошибке
+        $query = substr($query, 0, strlen($query) - 6);
+        $result = $mysqli->query($query);
+        while ($data = mysqli_fetch_assoc($result)) {
+            $array_tasks[] = $data;
+        }
+    }
+    echo json_encode($array_tasks);
+} else if (isset($_POST['loadingpanel'])) {
+    $query = "SELECT group_name FROM groups WHERE teacher_id = (SELECT teacher_id FROM teachers WHERE login = '" . $_SESSION['loginTeacher'] . "')";
+    posts($mysqli, $query);
+}
+
+
+
+
