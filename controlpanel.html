@@ -8,20 +8,22 @@
     <script src="js/controlpanel.js"></script>
 </head>
 <body>
-<div id="test"></div>
+
 <p>teacher name</p>
-<button onclick="showAllTasks()">отобразить все работы</button>
-<form>
+<button id="show-all-tasks">отобразить все работы</button>
+
     <select id="select-groups">
         <option selected disabled>выбор группы</option>
     </select>
 
-    <button>отобразить все работы по группе</button>
-    <button>отобразить по дате работы</button>
-    <button>отобразить имени работы</button>
-    <input type="text" placeholder="name/date test">
+    <button id="show-tasks-by-date">отобразить работы по дате</button>
+    <input type="text" id="date-day" size="3" placeholder="день" maxlength="2">
+    <input type="text" id="date-month" size="3" placeholder="месяц" maxlength="2">
+    <input type="text" id="date-year" size="3" placeholder="год" maxlength="4">
+    <button id="show-task-by-name">отобразить по имени работы</button>
+    <input type="text" id="task-name" placeholder="name/date test">
     <section id="sectionLeft"></section>
     <section id="sectionRight"></section>
-</form>
+
 </body>
 </html>

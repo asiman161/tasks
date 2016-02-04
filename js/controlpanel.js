@@ -1,7 +1,7 @@
 $(document).ready(function () {
     $.post("/php/tasks.php", {
-        loadingpanel : ""
-    }, function(req){
+        loadingpanel: ""
+    }, function (req) {
         var json = $.parseJSON(req);
         for (var i = 0; i < json.length; i++) {
             $("<option>" + json[i].group_name + "</option>").appendTo("#select-groups");
@@ -10,10 +10,10 @@ $(document).ready(function () {
 
     $(document).on("click", ".tasks-list", function (event) {
         var $el = $(this);
-        var taskname = $(this).text();
-        taskname = taskname.substr(0, taskname.indexOf("|"));
+        var taskslist = $(this).text();
+        taskslist = taskslist.substr(0, taskslist.indexOf("|"));
         $.post("/php/tasks.php", {
-            taskname: taskname
+            taskslist: taskslist
         }, function (req) {
             var json = $.parseJSON(req);
             $(".students-tasks").remove();
@@ -22,11 +22,13 @@ $(document).ready(function () {
             }
         });
     });
-    $(document).on("click", ".students-tasks", function(event){
+
+    $(document).on("click", ".students-tasks", function (event) {
         $(".task").remove();
         $("<p class='task'>" + $(this).text() + "</p>").appendTo("#sectionLeft");
     });
-    $(document).on("click", "#select-groups option", function(){
+
+    $(document).on("click", "#select-groups option", function () {
         var msg = $(this).text();
         $.post("/php/tasks.php", {
             groupstasks: msg
@@ -38,19 +40,53 @@ $(document).ready(function () {
                 $("<p class='tasks-list'>" + json[i].task_name + "|" + json[i].task_type + "|" + json[i].create_date + "</p>").appendTo("#sectionRight");
             }
         });
-    })
-});
+    });
 
-function showAllTasks() {
-    $.post("/php/tasks.php", {
-        alltasks: ""
-    }, function (req) {
+    $(document).on("click", "#show-all-tasks", function () {
+        $.post("/php/tasks.php", {
+            alltasks: ""
+        }, function (req) {
+            $(".tasks-list").remove();
+            $(".students-tasks").remove();
+            var json = $.parseJSON(req);
+            for (var i = 0; i < json.length; i++) {
+                $("<p class='tasks-list'>" + json[i].task_name + "|" + json[i].task_type + "|" + json[i].create_date + "</p>").appendTo("#sectionRight");
+            }
+        });
+    });
+
+    $(document).on("click", "#show-tasks-by-date", function () {
+        var year = $("#date-year").val();
+        var month = $("#date-month").val();
+        var day = $("#date-day").val();
         $(".tasks-list").remove();
         $(".students-tasks").remove();
-        var json = $.parseJSON(req);
-        for (var i = 0; i < json.length; i++) {
-            $("<p class='tasks-list'>" + json[i].task_name + "|" + json[i].task_type + "|" + json[i].create_date + "</p>").appendTo("#sectionRight");
-        }
+        if(year != "" && month != "" && day != "")
+        $.post("/php/tasks.php", {
+            year: year,
+            month: month,
+            day: day
+        }, function (req) {
+            var json = $.parseJSON(req);
+            for (var i = 0; i < json.length; i++) {
+                $("<p class='tasks-list'>" + json[i].task_name + "|" + json[i].task_type + "|" + json[i].create_date + "</p>").appendTo("#sectionRight");
+            }
+        });
     });
-}//
+
+    $(document).on("click", "#show-task-by-name", function () {
+        var taskname = $("#task-name").val();
+        $(".tasks-list").remove();
+        $(".students-tasks").remove();
+        if(taskname != "")
+        $.post("/php/tasks.php", {
+            taskname : taskname
+        }, function (req) {
+            var json = $.parseJSON(req);
+            for (var i = 0; i < json.length; i++) {
+                $("<p class='tasks-list'>" + json[i].task_name + "|" + json[i].task_type + "|" + json[i].create_date + "</p>").appendTo("#sectionRight");
+            }
+        });
+    });
+});
 

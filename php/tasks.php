@@ -26,8 +26,8 @@ function posts($mysqli, $query){
     echo json_encode($array_tasks);
 }
 
-if (isset($_POST['taskname'])) {
-    $query = "SELECT task_name,f_name, l_name, rating FROM tasks,students, students_tasks WHERE students_tasks.task_id = (SELECT task_id FROM tasks WHERE task_name='" . $_POST['taskname'] . "') AND students.student_id = students_tasks.student_id AND students_tasks.task_id = tasks.task_id";
+if (isset($_POST['taskslist'])) {
+    $query = "SELECT task_name,f_name, l_name, rating FROM tasks,students, students_tasks WHERE students_tasks.task_id = (SELECT task_id FROM tasks WHERE task_name='" . $_POST['taskslist'] . "') AND students.student_id = students_tasks.student_id AND students_tasks.task_id = tasks.task_id";
     posts($mysqli, $query);
 } else if (isset($_POST['alltasks'])) {
     $query = "SELECT task_name, task_type, create_date FROM tasks WHERE teacher_id = (SELECT teacher_id FROM teachers WHERE login = '" . $_SESSION['loginTeacher'] . "')";
@@ -50,6 +50,14 @@ if (isset($_POST['taskname'])) {
         }
     }
     echo json_encode($array_tasks);
+} if(isset($_POST['taskname'])){
+    $query = "SELECT task_name, task_type, create_date FROM tasks WHERE teacher_id = (SELECT teacher_id FROM teachers WHERE login = '" . $_SESSION['loginTeacher'] . "') AND task_name = '".$_POST['taskname']."'";
+    posts($mysqli, $query);
+} else if(isset($_POST['year']) || isset($_POST['month']) || isset($_POST['day'])){
+    $date = $_POST['year']."-".$_POST['month']."-".$_POST['day'];
+    $query = "SELECT task_name, task_type, create_date FROM tasks WHERE teacher_id = (SELECT teacher_id FROM teachers WHERE login = '" . $_SESSION['loginTeacher'] . "') AND create_date = '$date'";
+    posts($mysqli, $query);
+
 } else if (isset($_POST['loadingpanel'])) {
     $query = "SELECT group_name FROM groups WHERE teacher_id = (SELECT teacher_id FROM teachers WHERE login = '" . $_SESSION['loginTeacher'] . "')";
     posts($mysqli, $query);
