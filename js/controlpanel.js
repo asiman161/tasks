@@ -16,7 +16,7 @@ $(document).ready(function () {
             taskslist: taskslist
         }, function (req) {
             var json = $.parseJSON(req);
-            $(".students-tasks").remove();
+            $("#sectionLeft").empty();
             for (var i = 0; i < json.length; i++) {
                 $el.after("<p class='students-tasks'>--" + json[i].task_name + "|" + json[i].l_name + "|" + json[i].f_name + "|" + json[i].rating + "</p>");
             }
@@ -33,8 +33,7 @@ $(document).ready(function () {
         $.post("/php/tasks.php", {
             groupstasks: msg
         }, function (req) {
-            $(".tasks-list").remove();
-            $(".students-tasks").remove();
+            $("#sectionRight").empty();
             var json = $.parseJSON(req);
             for (var i = 0; i < json.length; i++) {
                 $("<p class='tasks-list'>" + json[i].task_name + "|" + json[i].task_type + "|" + json[i].create_date + "</p>").appendTo("#sectionRight");
@@ -46,8 +45,7 @@ $(document).ready(function () {
         $.post("/php/tasks.php", {
             alltasks: ""
         }, function (req) {
-            $(".tasks-list").remove();
-            $(".students-tasks").remove();
+            $("#sectionRight").empty();
             var json = $.parseJSON(req);
             for (var i = 0; i < json.length; i++) {
                 $("<p class='tasks-list'>" + json[i].task_name + "|" + json[i].task_type + "|" + json[i].create_date + "</p>").appendTo("#sectionRight");
@@ -59,8 +57,7 @@ $(document).ready(function () {
         var year = $("#date-year").val();
         var month = $("#date-month").val();
         var day = $("#date-day").val();
-        $(".tasks-list").remove();
-        $(".students-tasks").remove();
+        $("#sectionRight").empty();
         if(year != "" && month != "" && day != "")
         $.post("/php/tasks.php", {
             year: year,
@@ -76,8 +73,7 @@ $(document).ready(function () {
 
     $(document).on("click", "#show-task-by-name", function () {
         var taskname = $("#task-name").val();
-        $(".tasks-list").remove();
-        $(".students-tasks").remove();
+        $("#sectionRight").empty();
         if(taskname != "")
         $.post("/php/tasks.php", {
             taskname : taskname

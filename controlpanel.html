@@ -6,24 +6,70 @@
     <link href="css/style.css" rel="stylesheet" type="text/css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
     <script src="js/controlpanel.js"></script>
+    <script>
+        var numOfQuestions = 0;
+
+        function myAppend(data) {
+            $(data).appendTo("#sectionLeft #createTask");
+        }
+
+        $(document).on("click", "#make-control-task", function(){
+            numOfQuestions = parseInt($("#num-of-questions").val());
+            if (numOfQuestions > 20) numOfQuestions = 20;
+            $("#sectionLeft").empty();
+            if (numOfQuestions > 0) {
+                $("<form id='createTask'>").appendTo("#sectionLeft");
+                myAppend("<input type='text' id='name-of-task' placeholder='название работы' required/>");
+                for (var i = 0; i < numOfQuestions; i++) {
+                    myAppend("<p class='question-p'>" + (i + 1) + ")вопрос" + "</p>");
+                    myAppend("<input class='question-input' type='text' placeholder='текст вопроса' required/>");
+                }
+                myAppend("<input type='submit' value='создать контрольную'>");
+            }
+        });
+
+        $(document).on("submit", "#createTask", function(){
+            var questions = "";
+            var taskname = $("#name-of-task").val();
+            for (var i = 0; i < numOfQuestions; i++) {
+                questions += $('.question-input').val() + "|";
+                $(".question-input:first").remove();
+            }
+            $("#sectionLeft").empty();
+            questions = questions.substring(0, questions.length - 1);
+            numOfQuestions = 0;
+
+            $.post("/php/createtask.php", {
+                taskname: taskname,
+                questions: questions
+            }, function (req) {
+                alert(req);
+            });
+        });
+    </script>
 </head>
 <body>
 
 <p>teacher name</p>
 <button id="show-all-tasks">отобразить все работы</button>
 
-    <select id="select-groups">
-        <option selected disabled>выбор группы</option>
-    </select>
+<select id="select-groups">
+    <option selected disabled>выбор группы</option>
+</select>
 
-    <button id="show-tasks-by-date">отобразить работы по дате</button>
-    <input type="text" id="date-day" size="3" placeholder="день" maxlength="2">
-    <input type="text" id="date-month" size="3" placeholder="месяц" maxlength="2">
-    <input type="text" id="date-year" size="3" placeholder="год" maxlength="4">
-    <button id="show-task-by-name">отобразить по имени работы</button>
-    <input type="text" id="task-name" placeholder="name/date test">
+<button id="show-tasks-by-date">отобразить работы по дате</button>
+<input type="text" id="date-day" size="3" placeholder="день" maxlength="2">
+<input type="text" id="date-month" size="3" placeholder="месяц" maxlength="2">
+<input type="text" id="date-year" size="3" placeholder="год" maxlength="4">
+<button id="show-task-by-name">отобразить по имени работы</button>
+<input type="text" id="task-name" placeholder="name/date test"><br/>
+<button id="make-control-task">создать контрольную</button>
+<button >создать тест</button>
+<input type="number" id="num-of-questions" placeholder="кол-во вопросов">
+<section id="content">
     <section id="sectionLeft"></section>
     <section id="sectionRight"></section>
+</section>
 
 </body>
 </html>
