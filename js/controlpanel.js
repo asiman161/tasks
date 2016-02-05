@@ -16,7 +16,7 @@ $(document).ready(function () {
             taskslist: taskslist
         }, function (req) {
             var json = $.parseJSON(req);
-            $("#sectionLeft").empty();
+            $(".students-tasks").remove();
             for (var i = 0; i < json.length; i++) {
                 $el.after("<p class='students-tasks'>--" + json[i].task_name + "|" + json[i].l_name + "|" + json[i].f_name + "|" + json[i].rating + "</p>");
             }
@@ -25,6 +25,7 @@ $(document).ready(function () {
 
     $(document).on("click", ".students-tasks", function (event) {
         $(".task").remove();
+        $("#sectionLeft").empty();
         $("<p class='task'>" + $(this).text() + "</p>").appendTo("#sectionLeft");
     });
 
