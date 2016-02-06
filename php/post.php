@@ -20,4 +20,3 @@ if(isset($_POST['text']) && isset($_POST['email']) && isset($_POST['sub'])){
     $mysqli->query($queryq);
     }
 }
-?>

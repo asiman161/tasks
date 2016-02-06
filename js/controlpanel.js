@@ -35,9 +35,11 @@ $(document).ready(function () {
             groupstasks: msg
         }, function (req) {
             $("#sectionRight").empty();
-            var json = $.parseJSON(req);
-            for (var i = 0; i < json.length; i++) {
-                $("<p class='tasks-list'>" + json[i].task_name + "|" + json[i].task_type + "|" + json[i].create_date + "</p>").appendTo("#sectionRight");
+            if (req != "") {
+                var json = $.parseJSON(req);
+                for (var i = 0; i < json.length; i++) {
+                    $("<p class='tasks-list'>" + json[i].task_name + "|" + json[i].task_type + "|" + json[i].create_date + "</p>").appendTo("#sectionRight");
+                }
             }
         });
     });
@@ -59,31 +61,31 @@ $(document).ready(function () {
         var month = $("#date-month").val();
         var day = $("#date-day").val();
         $("#sectionRight").empty();
-        if(year != "" && month != "" && day != "")
-        $.post("/php/tasks.php", {
-            year: year,
-            month: month,
-            day: day
-        }, function (req) {
-            var json = $.parseJSON(req);
-            for (var i = 0; i < json.length; i++) {
-                $("<p class='tasks-list'>" + json[i].task_name + "|" + json[i].task_type + "|" + json[i].create_date + "</p>").appendTo("#sectionRight");
-            }
-        });
+        if (year != "" && month != "" && day != "")
+            $.post("/php/tasks.php", {
+                year: year,
+                month: month,
+                day: day
+            }, function (req) {
+                var json = $.parseJSON(req);
+                for (var i = 0; i < json.length; i++) {
+                    $("<p class='tasks-list'>" + json[i].task_name + "|" + json[i].task_type + "|" + json[i].create_date + "</p>").appendTo("#sectionRight");
+                }
+            });
     });
 
     $(document).on("click", "#show-task-by-name", function () {
         var taskname = $("#task-name").val();
         $("#sectionRight").empty();
-        if(taskname != "")
-        $.post("/php/tasks.php", {
-            taskname : taskname
-        }, function (req) {
-            var json = $.parseJSON(req);
-            for (var i = 0; i < json.length; i++) {
-                $("<p class='tasks-list'>" + json[i].task_name + "|" + json[i].task_type + "|" + json[i].create_date + "</p>").appendTo("#sectionRight");
-            }
-        });
+        if (taskname != "")
+            $.post("/php/tasks.php", {
+                taskname: taskname
+            }, function (req) {
+                var json = $.parseJSON(req);
+                for (var i = 0; i < json.length; i++) {
+                    $("<p class='tasks-list'>" + json[i].task_name + "|" + json[i].task_type + "|" + json[i].create_date + "</p>").appendTo("#sectionRight");
+                }
+            });
     });
 });
 

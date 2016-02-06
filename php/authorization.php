@@ -15,18 +15,16 @@ if ($mysqli->connect_errno) {
 if (isset($_POST['login']) && isset($_POST['password'])) {
     $login = $_POST['login'];
     $password = $_POST['password'];
-    $query = "SELECT login FROM teachers WHERE login='".$login."' AND password='".$password."'";
+    $query = "SELECT user_login FROM teachers WHERE user_login='$login' AND user_password='$password'";
     $login = $mysqli->query($query)->fetch_row();
     if ($login[0] == $_POST['login']) {
-        //setcookie("loginTeacher", $login[0], 0,"/");
-        $_SESSION["loginTeacher"] = $login[0];
-        echo "true";
-        //echo $_SESSION["loginTeacher"];
 
+        $_SESSION["teacherLogin"] = $login[0];
+        echo "true";
     } else {
         echo "такого пользователя нет";
     }
-} else{
+} else {
     echo "нет поста";
 }
 
@@ -34,25 +32,3 @@ if (isset($_POST['login']) && isset($_POST['password'])) {
 /*while (($row = $result->fetch_assoc()) != false) {
     print_r($row['l_name']);
 }*/
-
-
-/*$res1 = $mysqli->query("SELECT COUNT(*) FROM teachers WHERE f_name='Сергей' ")->fetch_assoc();
-if($res1['COUNT(*)'] == 1){
-    echo 'solo';
-} else {
-    echo 'many';
-}
-$res2 = $mysqli->query("SELECT COUNT(*) FROM teachers WHERE f_name='Павел' ")->fetch_assoc();
-if($res2['COUNT(*)'] == 1){
-    echo 'solo';
-} else {
-    echo 'many';
-}*/
-
-
-//var_dump($_POST);
-
-
-//echo $users;
-
-?>

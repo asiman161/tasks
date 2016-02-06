@@ -14,9 +14,9 @@ if ($mysqli->connect_errno) {
 }
 
 if (isset($_POST['start'])) {
-    $query = "SELECT login FROM teachers WHERE login='" . $_SESSION['loginTeacher'] . "'";
+    $query = "SELECT user_login FROM teachers WHERE user_login='" . $_SESSION['teacherLogin'] . "'";
     $login = $mysqli->query($query)->fetch_row();
-    if ($login[0] == $_SESSION['loginTeacher'] && $login[0] != "") {
+    if ($login[0] == $_SESSION['teacherLogin'] && $login[0] != "") {
         echo "true";
     } else {
         echo "false";
