@@ -11,6 +11,7 @@ $(document).ready(function () {
     $(document).on("click", ".tasks-list", function (event) {
         var $el = $(this);
         var taskslist = $(this).text();
+        var taskName = "";
         taskslist = taskslist.substr(0, taskslist.indexOf("|"));
         $.post("/php/tasks.php", {
             taskslist: taskslist
@@ -18,7 +19,9 @@ $(document).ready(function () {
             var json = $.parseJSON(req);
             $(".students-tasks").remove();
             for (var i = 0; i < json.length; i++) {
-                $el.after("<p class='students-tasks'>--" + json[i].task_name + "|" + json[i].l_name + "|" + json[i].f_name + "|" + json[i].rating + "</p>");
+                taskName = json[i].task_name;
+                taskName = taskName.substr(5);
+                $el.after("<p class='students-tasks'>--" + taskName + "|" + json[i].l_name + "|" + json[i].f_name + "|" + json[i].rating + "</p>");
             }
         });
     });
@@ -31,6 +34,7 @@ $(document).ready(function () {
 
     $(document).on("click", "#select-groups option", function () {
         var msg = $(this).text();
+        var taskName = "";
         $.post("/php/tasks.php", {
             groupstasks: msg
         }, function (req) {
@@ -38,25 +42,31 @@ $(document).ready(function () {
             if (req != "") {
                 var json = $.parseJSON(req);
                 for (var i = 0; i < json.length; i++) {
-                    $("<p class='tasks-list'>" + json[i].task_name + "|" + json[i].task_type + "|" + json[i].create_date + "</p>").appendTo("#sectionRight");
+                    taskName = json[i].task_name;
+                    taskName = taskName.substr(5);
+                    $("<p class='tasks-list'>" + taskName + "|" + json[i].task_type + "|" + json[i].create_date + "</p>").appendTo("#sectionRight");
                 }
             }
         });
     });
 
     $(document).on("click", "#show-all-tasks", function () {
+        var taskName = "";
         $.post("/php/tasks.php", {
             alltasks: ""
         }, function (req) {
             $("#sectionRight").empty();
             var json = $.parseJSON(req);
             for (var i = 0; i < json.length; i++) {
-                $("<p class='tasks-list'>" + json[i].task_name + "|" + json[i].task_type + "|" + json[i].create_date + "</p>").appendTo("#sectionRight");
+                taskName = json[i].task_name;
+                taskName = taskName.substr(5);
+                $("<p class='tasks-list'>" + taskName + "|" + json[i].task_type + "|" + json[i].create_date + "</p>").appendTo("#sectionRight");
             }
         });
     });
 
     $(document).on("click", "#show-tasks-by-date", function () {
+        var taskName = "";
         var year = $("#date-year").val();
         var month = $("#date-month").val();
         var day = $("#date-day").val();
@@ -69,12 +79,15 @@ $(document).ready(function () {
             }, function (req) {
                 var json = $.parseJSON(req);
                 for (var i = 0; i < json.length; i++) {
-                    $("<p class='tasks-list'>" + json[i].task_name + "|" + json[i].task_type + "|" + json[i].create_date + "</p>").appendTo("#sectionRight");
+                    taskName = json[i].task_name;
+                    taskName = taskName.substr(5);
+                    $("<p class='tasks-list'>" + taskName + "|" + json[i].task_type + "|" + json[i].create_date + "</p>").appendTo("#sectionRight");
                 }
             });
     });
 
     $(document).on("click", "#show-task-by-name", function () {
+        var taskName = "";
         var taskname = $("#task-name").val();
         $("#sectionRight").empty();
         if (taskname != "")
@@ -83,7 +96,9 @@ $(document).ready(function () {
             }, function (req) {
                 var json = $.parseJSON(req);
                 for (var i = 0; i < json.length; i++) {
-                    $("<p class='tasks-list'>" + json[i].task_name + "|" + json[i].task_type + "|" + json[i].create_date + "</p>").appendTo("#sectionRight");
+                    taskName = json[i].task_name;
+                    taskName = taskName.substr(5);
+                    $("<p class='tasks-list'>" + taskName + "|" + json[i].task_type + "|" + json[i].create_date + "</p>").appendTo("#sectionRight");
                 }
             });
     });

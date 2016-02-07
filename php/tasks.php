@@ -6,16 +6,7 @@
  * Time: 20:11
  */
 
-session_set_cookie_params(0);
-session_start();
-
- $mysqli = new mysqli("localhost", "u608271277_root", "bestpass", "u608271277_tests");
-
-/* проверка соединения */
-if ($mysqli->connect_errno) {
-    printf("Не удалось подключиться: %s\n", $mysqli->connect_error);
-    exit();
-}
+include "bd.php";
 
 function posts($mysqli, $query){
     $result = $mysqli->query($query);
@@ -27,7 +18,8 @@ function posts($mysqli, $query){
 }
 
 if (isset($_POST['taskslist'])) {
-    $query = "SELECT task_name,f_name, l_name, rating FROM tasks,students, students_tasks WHERE students_tasks.task_id = (SELECT task_id FROM tasks WHERE task_name='" . $_POST['taskslist'] . "') AND students.student_id = students_tasks.student_id AND students_tasks.task_id = tasks.task_id";
+    $taskslist = $_SESSION['teacherPrefix'].$_POST['taskslist'];
+    $query = "SELECT task_name,f_name, l_name, rating FROM tasks,students, students_tasks WHERE students_tasks.task_id = (SELECT task_id FROM tasks WHERE task_name='$taskslist') AND students.student_id = students_tasks.student_id AND students_tasks.task_id = tasks.task_id";
     posts($mysqli, $query);
 } else if (isset($_POST['alltasks'])) {
     $query = "SELECT task_name, task_type, create_date FROM tasks WHERE teacher_id = (SELECT teacher_id FROM teachers WHERE user_login = '" . $_SESSION['teacherLogin'] . "')";
@@ -48,7 +40,8 @@ if (isset($_POST['taskslist'])) {
     }
 
 } if(isset($_POST['taskname'])){
-    $query = "SELECT task_name, task_type, create_date FROM tasks WHERE teacher_id = (SELECT teacher_id FROM teachers WHERE user_login = '" . $_SESSION['teacherLogin'] . "') AND task_name = '".$_POST['taskname']."'";
+    $taskname = $_SESSION['teacherPrefix'].$_POST['taskname'];
+    $query = "SELECT task_name, task_type, create_date FROM tasks WHERE teacher_id = (SELECT teacher_id FROM teachers WHERE user_login = '" . $_SESSION['teacherLogin'] . "') AND task_name = '$taskname'";
     posts($mysqli, $query);
 } else if(isset($_POST['year']) || isset($_POST['month']) || isset($_POST['day'])){
     $date = $_POST['year']."-".$_POST['month']."-".$_POST['day'];

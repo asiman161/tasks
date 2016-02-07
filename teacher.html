@@ -11,11 +11,11 @@
             $.post("php/authorization.php", {
                 login: login,
                 password: password
-            }, function (data) {
-                if (data == "true")
+            }, function (req) {
+                if (req == "true")
                     window.location.href = "/controlpanel.html";
                 else {
-                    alert("такого пользователя не существует");
+                    alert(req);
                 }
             });
         }

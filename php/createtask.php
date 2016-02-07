@@ -5,16 +5,7 @@
  * Date: 05.02.2016
  * Time: 21:16
  */
-session_set_cookie_params(0);
-session_start();
-
-$mysqli = new mysqli("localhost", "u608271277_root", "bestpass", "u608271277_tests");
-
-/* проверка соединения */
-if ($mysqli->connect_errno) {
-    printf("Не удалось подключиться: %s\n", $mysqli->connect_error);
-    exit();
-}
+include "bd.php";
 
 if (isset($_POST['questions'])) {
     $query = "SELECT user_login FROM teachers WHERE user_login='" . $_SESSION['teacherLogin'] . "'";
@@ -25,15 +16,18 @@ if (isset($_POST['questions'])) {
         $login = $_SESSION['teacherLogin'];
         $tasktype = $_POST['tasktype'];
         $tasktime = $_POST['tasktime'];
-        $taskname = $_POST['taskname'];
+        $taskname = $_SESSION['teacherPrefix'].$_POST['taskname'];
         $date = date('Y-m-d');
-        $query = "INSERT INTO tasks VALUES (NULL, (SELECT teacher_id FROM teachers WHERE user_login ='$login'), '$tasktype', '$tasktime', '$taskname', '$date')";
+        $query = "INSERT INTO tasks(teacher_id, task_type, task_time, task_name, create_date) VALUES ((SELECT teacher_id FROM teachers WHERE user_login ='$login'), '$tasktype', '$tasktime', '$taskname', '$date')";
         $res = $mysqli->query($query);
         if ($res != "") {
-            $query = "SELECT task_id FROM tasks WHERE task_name = '" . $_POST['taskname'] . "'";
+            $query = "SELECT task_id FROM tasks WHERE task_name = '$taskname'";
             $taskid = $mysqli->query($query)->fetch_row();
             foreach ($questions as $question) {
-                $query = "INSERT INTO questions VALUES (NULL, '$taskid[0]', '$question')";
+                $option = substr($question, strlen($str)-1);
+                $question = substr($question, 0, strlen($question)-1);
+                //$option = mb_substr($question, count($question-1));
+                $query = "INSERT INTO questions VALUES (NULL, '$taskid[0]','$option' , '$question')";
                 $mysqli->query($query);
             }
             echo "true";
