@@ -24,7 +24,7 @@ if (isset($_POST['questions'])) {
             $query = "SELECT task_id FROM tasks WHERE task_name = '$taskname'";
             $taskid = $mysqli->query($query)->fetch_row();
             foreach ($questions as $question) {
-                $option = substr($question, strlen($str)-1);
+                $option = substr($question, strlen($question)-1);
                 $question = substr($question, 0, strlen($question)-1);
                 //$option = mb_substr($question, count($question-1));
                 $query = "INSERT INTO questions VALUES (NULL, '$taskid[0]','$option' , '$question')";

@@ -22,7 +22,7 @@ $(document).on("click", "#make-control-task", function () {
                 myAppendTo("<p>---</p>", "#sectionLeft #createTask");
             for (var j = 0; j < numOfQuestions; j++) {
                 myAppendTo("<p class='question-p'>" + (i + 1) + ")вариант " + (j + 1) + ")вопрос" + "</p>", "#sectionLeft #createTask");
-                myAppendTo("<textarea class='question-input' name=" + "'" + (i+1) + "'" + " placeholder='текст вопроса' required/>", "#sectionLeft #createTask");
+                myAppendTo("<textarea class='question-input' name=" + "'" + (i + 1) + "'" + " placeholder='текст вопроса' required/>", "#sectionLeft #createTask");
             }
         }
         myAppendTo("<input type='submit' value='создать контрольную'>", "#sectionLeft #createTask");
@@ -59,4 +59,5 @@ $(document).on("submit", "#createTask", function () {
         else
             alert('задание создано')
     });
+    return false;
 });
