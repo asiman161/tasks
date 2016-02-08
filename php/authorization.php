@@ -9,18 +9,31 @@
 include "bd.php";
 
 if (isset($_POST['login']) && isset($_POST['password'])) {
-    $login = $_POST['login'];
-    $password = $_POST['password'];
-    $query = "SELECT user_login FROM teachers WHERE user_login='$login' AND user_password='$password'";
-    $login = $mysqli->query($query)->fetch_row();
-    if ($login[0] == $_POST['login']) {
-        $query = "SELECT prefix FROM teachers WHERE user_login='$login[0]'";
-        $prefix = $mysqli->query($query)->fetch_row();
-        $_SESSION['teacherPrefix'] = $prefix[0];
-        $_SESSION['teacherLogin'] = $login[0];
-        echo "true";
+    if($_POST['user'] == "teacher") {
+        $login = $_POST['login'];
+        $password = $_POST['password'];
+        $query = "SELECT user_login FROM teachers WHERE user_login='$login' AND user_password='$password'";
+        $login = $mysqli->query($query)->fetch_row();
+        if ($login[0] == $_POST['login']) {
+            $query = "SELECT prefix FROM teachers WHERE user_login='$login[0]'";
+            $prefix = $mysqli->query($query)->fetch_row();
+            $_SESSION['teacherPrefix'] = $prefix[0];
+            $_SESSION['teacherLogin'] = $login[0];
+            echo "true";
+        } else {
+            echo "такого пользователя нет";
+        }
     } else {
-        echo "такого пользователя нет";
+        $login = $_POST['login'];
+        $password = $_POST['password'];
+        $query = "SELECT user_login FROM students WHERE user_login='$login' AND user_password='$password'";
+        $login = $mysqli->query($query)->fetch_row();
+        if($login[0] == $_POST['login']){
+            $_SESSION['studentLogin'] = $login[0];
+            echo "true";
+        } else {
+            echo "Такого пользователя нет";
+        }
     }
 } else {
     echo "нет поста";

@@ -18,9 +18,21 @@ body{
     float: left;
 }
 
-#sectionRight{
+#sectionRight {
     width: 640px;
     height: 1000px;
     background: #96a4ff;
+    float: right;
+}
+#sectionRightTop {
+    width: 640px;
+    height: 500px;
+    background: #96a4ff;
+    float: right;
+}
+#sectionRightBottom {
+    width: 640px;
+    height: 500px;
+    background: #7eff61;
     float: right;
 }

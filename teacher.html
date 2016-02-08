@@ -9,6 +9,7 @@
             var login = $("[name='login']").val();
             var password = $("[name='password']").val();
             $.post("php/authorization.php", {
+                user : "teacher",
                 login: login,
                 password: password
             }, function (req) {

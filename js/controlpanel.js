@@ -1,6 +1,7 @@
 $(document).ready(function () {
     $.post("/php/tasks.php", {
-        loadingpanel: ""
+        loadingpanel: "",
+        loadinggroups : ""
     }, function (req) {
         var json = $.parseJSON(req);
         for (var i = 0; i < json.length; i++) {
