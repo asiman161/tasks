@@ -35,7 +35,5 @@ if (isset($_POST['questions'])) {
             echo "false";
         }
     }
-    /*if($res = mysqli->query(...)) //проверка прошел ли sql запрос
-    echo "\n---" . "good" . "$res" ."---\n";
-    else echo "\n---" . "bad" . "$res" . "---\n";*/
+
 }
