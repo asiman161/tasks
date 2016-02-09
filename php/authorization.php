@@ -29,7 +29,10 @@ if (isset($_POST['login']) && isset($_POST['password'])) {
         $query = "SELECT user_login FROM students WHERE user_login='$login' AND user_password='$password'";
         $login = $mysqli->query($query)->fetch_row();
         if($login[0] == $_POST['login']){
+            $query = "SELECT group_id FROM students WHERE user_login='$login[0]'";
+            $studentGroup = $mysqli->query($query)->fetch_row();
             $_SESSION['studentLogin'] = $login[0];
+            $_SESSION['studentGroup'] = $studentGroup[0];
             echo "true";
         } else {
             echo "Такого пользователя нет";

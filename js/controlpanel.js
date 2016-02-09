@@ -1,5 +1,5 @@
 $(document).ready(function () {
-    $.post("/php/tasks.php", {
+    $.post("/php/taskscontrolpanel.php", {
         loadingpanel: "",
         loadinggroups : ""
     }, function (req) {
@@ -9,12 +9,12 @@ $(document).ready(function () {
         }
     });
 
-    $(document).on("click", ".tasks-list", function (event) {
+    $(document).on("click", ".tasks-list", function () {
         var $el = $(this);
         var taskslist = $(this).text();
         var taskName = "";
         taskslist = taskslist.substr(0, taskslist.indexOf("|"));
-        $.post("/php/tasks.php", {
+        $.post("/php/taskscontrolpanel.php", {
             taskslist: taskslist
         }, function (req) {
             var json = $.parseJSON(req);
@@ -27,7 +27,7 @@ $(document).ready(function () {
         });
     });
 
-    $(document).on("click", ".students-tasks", function (event) {
+    $(document).on("click", ".students-tasks", function () {
         $(".task").remove();
         $("#sectionLeft").empty();
         $("<p class='task'>" + $(this).text() + "</p>").appendTo("#sectionLeft");
@@ -36,7 +36,7 @@ $(document).ready(function () {
     $(document).on("click", "#select-groups option", function () {
         var msg = $(this).text();
         var taskName = "";
-        $.post("/php/tasks.php", {
+        $.post("/php/taskscontrolpanel.php", {
             groupstasks: msg
         }, function (req) {
             $("#sectionRight").empty();
@@ -53,7 +53,7 @@ $(document).ready(function () {
 
     $(document).on("click", "#show-all-tasks", function () {
         var taskName = "";
-        $.post("/php/tasks.php", {
+        $.post("/php/taskscontrolpanel.php", {
             alltasks: ""
         }, function (req) {
             $("#sectionRight").empty();
@@ -73,7 +73,7 @@ $(document).ready(function () {
         var day = $("#date-day").val();
         $("#sectionRight").empty();
         if (year != "" && month != "" && day != "")
-            $.post("/php/tasks.php", {
+            $.post("/php/taskscontrolpanel.php", {
                 year: year,
                 month: month,
                 day: day
@@ -92,7 +92,7 @@ $(document).ready(function () {
         var taskname = $("#task-name").val();
         $("#sectionRight").empty();
         if (taskname != "")
-            $.post("/php/tasks.php", {
+            $.post("/php/taskscontrolpanel.php", {
                 taskname: taskname
             }, function (req) {
                 var json = $.parseJSON(req);

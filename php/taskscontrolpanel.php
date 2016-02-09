@@ -10,6 +10,7 @@ include "bd.php";
 
 function posts($mysqli, $query)
 {
+    /** @noinspection PhpUndefinedMethodInspection */
     $result = $mysqli->query($query);
     $array_tasks = array();
     while ($data = mysqli_fetch_assoc($result)) {
