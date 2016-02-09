@@ -39,7 +39,6 @@ if (isset($_POST['taskslist'])) {
         $query = substr($query, 0, strlen($query) - 6);
         posts($mysqli, $query);
     }
-
 }
 if (isset($_POST['taskname'])) {
     $taskname = $_SESSION['teacherPrefix'] . $_POST['taskname'];
@@ -53,9 +52,19 @@ if (isset($_POST['taskname'])) {
 } else if (isset($_POST['loadingpanel'])) {
     if (isset($_POST['loadinggroups'])) {
         $teacherLogin = $_SESSION['teacherLogin'];
-        $query = "SELECT group_name FROM groups WHERE teacher_id = (SELECT teacher_id FROM teachers WHERE user_login = '$teacherLogin')";
-        posts($mysqli, $query);
-    } else if (isset($_POST['loadingteachers'])) {//////////////////////
+        $query = "SELECT group_id FROM groups_and_teachers WHERE teacher_id = (SELECT teacher_id FROM teachers WHERE user_login = '$teacherLogin');";
+        $result = $mysqli->query($query);
+        $array_tasks = array();
+        $query = "";
+        while ($data = mysqli_fetch_assoc($result)) {
+            //объединяю строки для получения запроса, в котором будет учавствовать сразу несколько тестов по разным id
+            $query .= "SELECT group_name FROM groups WHERE group_id = '" . $data['group_id'] . "' UNION ";
+        }
+        if (strlen($query) > 0) { //запрос может получиться пустым, если с указанной группой нет работ, что может привести к ошибке
+            $query = substr($query, 0, strlen($query) - 6);
+            posts($mysqli, $query);
+        }
+    } else if (isset($_POST['loadingteachers'])) {
         $studentLogin = $_SESSION['studentLogin'];
         $query = "SELECT teacher_id FROM groups_and_teachers WHERE group_id = (SELECT group_id FROM students WHERE user_login = '$studentLogin');";
         $result = $mysqli->query($query);
@@ -69,7 +78,7 @@ if (isset($_POST['taskname'])) {
             $query = substr($query, 0, strlen($query) - 6);
             posts($mysqli, $query);
         }
-    }//////////////////////////////////////////////
+    }
 
 }
 
