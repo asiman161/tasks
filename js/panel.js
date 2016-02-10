@@ -1,6 +1,8 @@
 /**
  * Created by Asiman on 08.02.2016.
  */
+var teachers = [];
+
 $(document).ready(function () {
     $.post("/php/taskscontrolpanel.php", {
         loadingpanel: "",
@@ -8,13 +10,14 @@ $(document).ready(function () {
     }, function (req) {
         var json = $.parseJSON(req);
         for (var i = 0; i < json.length; i++) {
+            teachers[json[i].l_name] = json[i].teacher_id;
             $("<option>" + json[i].l_name + "</option>").appendTo("#select-groups").attr("data-teacher-id", json[i].teacher_id);
         }
     });
 
-    $(document).on("click", "#select-groups option", function () {
-        var teacherId = $(this).attr("data-teacher-id");
-        //alert(teacherId);
+    $(document).on("change", "#select-groups", function () {
+        var teacherId = teachers[$(this).val()];
+        alert(teachers[$(this).val()]);
         var taskName = "";
         $.post("/php/taskspanel.php", {
             allTasksByTeacher: "",

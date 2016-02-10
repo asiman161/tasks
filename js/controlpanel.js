@@ -33,11 +33,11 @@ $(document).ready(function () {
         $("<p class='task'>" + $(this).text() + "</p>").appendTo("#section-left");
     });
 
-    $(document).on("click", "#select-groups option", function () {
-        var msg = $(this).text();
+    $(document).on("change", "#select-groups", function () {
+        var groupstasks = $(this).val();
         var taskName = "";
         $.post("/php/taskscontrolpanel.php", {
-            groupstasks: msg
+            groupstasks: groupstasks
         }, function (req) {
             $("#sectionRight").empty();
             if (req != "") {
