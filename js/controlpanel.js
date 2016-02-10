@@ -29,8 +29,8 @@ $(document).ready(function () {
 
     $(document).on("click", ".students-tasks", function () {
         $(".task").remove();
-        $("#sectionLeft").empty();
-        $("<p class='task'>" + $(this).text() + "</p>").appendTo("#sectionLeft");
+        $("#section-left").empty();
+        $("<p class='task'>" + $(this).text() + "</p>").appendTo("#section-left");
     });
 
     $(document).on("click", "#select-groups option", function () {

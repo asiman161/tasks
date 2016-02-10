@@ -73,7 +73,7 @@ if (isset($_POST['taskname'])) {
         $query = "";
         while ($data = mysqli_fetch_assoc($result)) {
             //объединяю строки для получения запроса, в котором будет учавствовать сразу несколько тестов по разным id
-            $query .= "SELECT l_name FROM teachers WHERE teacher_id = '" . $data['teacher_id'] . "' UNION ";
+            $query .= "SELECT teacher_id,l_name FROM teachers WHERE teacher_id = '" . $data['teacher_id'] . "' UNION ";
         }
         if (strlen($query) > 0) { //запрос может получиться пустым, если с указанной группой нет работ, что может привести к ошибке
             $query = substr($query, 0, strlen($query) - 6);

@@ -11,7 +11,7 @@ body{
     background-color: #7e7b7d;
 }
 
-#sectionLeft{
+#section-left{
     width: 640px;
     height: 1000px;
     background: #FFB9C7;
@@ -24,13 +24,13 @@ body{
     background: #96a4ff;
     float: right;
 }
-#sectionRightTop {
+#section-right-top {
     width: 640px;
     height: 500px;
     background: #96a4ff;
     float: right;
 }
-#sectionRightBottom {
+#section-right-bottom {
     width: 640px;
     height: 500px;
     background: #7eff61;

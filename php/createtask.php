@@ -22,12 +22,11 @@ if (isset($_POST['questions'])) {
         $res = $mysqli->query($query);
         if ($res != "") {
             $query = "SELECT task_id FROM tasks WHERE task_name = '$taskname'";
-            $taskid = $mysqli->query($query)->fetch_row();
+            $taskId = $mysqli->query($query)->fetch_row();
             foreach ($questions as $question) {
                 $option = substr($question, strlen($question)-1);
                 $question = substr($question, 0, strlen($question)-1);
-                //$option = mb_substr($question, count($question-1));
-                $query = "INSERT INTO questions VALUES (NULL, '$taskid[0]','$option' , '$question')";
+                $query = "INSERT INTO questions(task_id, question_option, question_text) VALUES ('$taskId[0]','$option' , '$question')";
                 $mysqli->query($query);
             }
             echo "true";

@@ -19,13 +19,15 @@ function posts($mysqli, $query)
     echo json_encode($array_tasks);
 }
 
-if(isset($_POST['allTasksByTeacher'])){
-    $login = $_SESSION['studentLogin'];
-    $teacherName = $_POST['teacherName'];
-    $query = "SELECT EXISTS(SELECT groups_and_teachers_id FROM groups_and_teachers WHERE group_id = (SELECT group_id FROM students WHERE user_login = '$login') AND teacher_id = (SELECT teacher_id FROM teachers WHERE l_name = '$teacherName'))";
-    $result = $mysqli->query($query)->fetch_row();
-    if($result[0] == 1){
-        $query = "SELECT task_name, task_type, create_date FROM tasks WHERE teacher_id = (SELECT teacher_id FROM teachers WHERE l_name = '$teacherName')";
+if (isset($_POST)) {
+    if (isset($_POST['getQuestions'])) {
+        $taskId = $_POST['getQuestions'];
+        $option = $_POST['option'];
+        $query = "SELECT question_text FROM questions WHERE question_option = '$option' AND task_id = '$taskId' ORDER BY question_id ASC";
+        posts($mysqli, $query);
+    } else if (isset($_POST['allTasksByTeacher'])) {
+        $teacherId = $_POST['teacherId'];
+        $query = "SELECT task_id,task_name, task_type,task_time, create_date FROM tasks WHERE teacher_id = '$teacherId' ORDER BY task_id ASC";
         posts($mysqli, $query);
     }
 }
