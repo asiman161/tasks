@@ -15,9 +15,12 @@ $(document).ready(function () {
         }
     });
 
+
+
+
     $(document).on("change", "#select-groups", function () {
         var teacherId = teachers[$(this).val()];
-        alert(teachers[$(this).val()]);
+        //alert(teachers[$(this).val()]);
         var taskName = "";
         $.post("/php/taskspanel.php", {
             allTasksByTeacher: "",

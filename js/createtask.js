@@ -15,30 +15,30 @@ $(document).on("click", "#make-control-task", function () {
     if (numOfQuestions > 20) numOfQuestions = 20;
     $("#section-left").empty();
     if (numOfQuestions > 0) {
-        myAppendTo("<form id='createTask'>", "#section-left");
-        myAppendTo("<input type='text' id='name-of-task' pattern='.{5,115}' placeholder='название работы' required/>", "#section-left #createTask");
+        myAppendTo("<form id='create-task'>", "#section-left");
+        myAppendTo("<input type='text' id='name-of-task' pattern='.{5,115}' placeholder='название работы' required/>", "#section-left #create-task");
         for (var i = 0; i < numOfOptions; i++) {
             if (i != 0)
-                myAppendTo("<p>---</p>", "#section-left #createTask");
+                myAppendTo("<p>---</p>", "#section-left #create-task");
             for (var j = 0; j < numOfQuestions; j++) {
-                myAppendTo("<p class='question-p'>" + (i + 1) + ")вариант " + (j + 1) + ")вопрос" + "</p>", "#section-left #createTask");
-                myAppendTo("<textarea class='question-textarea' name=" + "'" + (i + 1) + "'" + " placeholder='текст вопроса' required/>", "#section-left #createTask");
+                myAppendTo("<p class='question-p'>" + (i + 1) + ")вариант " + (j + 1) + ")вопрос" + "</p>", "#section-left #create-task");
+                myAppendTo("<textarea class='question-textarea' name=" + "'" + (i + 1) + "'" + " placeholder='текст вопроса' required/>", "#section-left #create-task");
             }
         }
-        myAppendTo("<input type='submit' value='создать контрольную'>", "#section-left #createTask");
+        myAppendTo("<input type='submit' value='создать контрольную'/>", "#section-left #create-task");
     }
 });
 
-$(document).on("submit", "#createTask", function () {
+$(document).on("submit", "#create-task", function () {
     var questions = "";
-    var questionTest = "";
+    var questionText = "";
     var taskTime = parseInt($("#time-of-questions").val());
     var taskname = $("#name-of-task").val();
     var taskOptions = $("#num-of-options").val();
     for (var i = 0; i < numOfQuestions * taskOptions; i++) {
-        questionTest = $(".question-textarea").val() + $(".question-textarea").attr("name");
-        if (questionTest.length >= 5 && taskTime > 0 && taskTime <= 99 && taskOptions > 0 && taskOptions < 10) {
-            questions += questionTest + "|";
+        questionText = $(".question-textarea").val() + $(".question-textarea").attr("name");
+        if (questionText.length >= 5 && taskTime > 0 && taskTime <= 99 && taskOptions > 0 && taskOptions < 10) {
+            questions += questionText + "|";
             $(".question-textarea:first").remove();
         } else {
             alert('минимальная длина вопроса не может быть меньше 5 символов или не указано(или слишком большое) время');

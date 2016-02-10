@@ -23,7 +23,7 @@ if (isset($_POST)) {
     if (isset($_POST['getQuestions'])) {
         $taskId = $_POST['getQuestions'];
         $option = $_POST['option'];
-        $query = "SELECT question_text FROM questions WHERE question_option = '$option' AND task_id = '$taskId' ORDER BY question_id ASC";
+        $query = "SELECT question_text, question_id FROM questions WHERE question_option = '$option' AND task_id = '$taskId' ORDER BY question_id ASC";
         posts($mysqli, $query);
     } else if (isset($_POST['allTasksByTeacher'])) {
         $teacherId = $_POST['teacherId'];
