@@ -64,7 +64,8 @@ $(document).ready(function () {
         }
         $.post("/php/answertask.php", {
             answers: answers,
-            questionid: questionId
+            questionid: questionId,
+            taskid: taskId
         }, function (req) {
             //alert(req);
         });
