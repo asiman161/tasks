@@ -45,6 +45,15 @@ if (isset($_POST)) {
                 $query = "INSERT INTO control_answers(question_id, student_id, answer_text) VALUES ('$question', (SELECT student_id FROM students WHERE user_login = '$studentLogin'),'$answer')";
                 $mysqli->query($query);
             }
+            $query = "INSERT INTO students_tasks(student_id, task_id, create_date) VALUES ((SELECT student_id FROM students WHERE user_login = '$studentLogin'), '$taskId', curdate())";
+            $mysqli->query($query);
+
+            $query = "SELECT groups_tasks_id FROM groups_tasks WHERE group_id = (SELECT group_id FROM students WHERE user_login = '$studentLogin') AND task_id = '$taskId'";
+            $result = $mysqli->query($query)->fetch_row();
+            if ($result[0] == "") {
+                $query = "INSERT INTO groups_tasks(group_id, task_id) VALUES ((SELECT group_id FROM students WHERE user_login = '$studentLogin'), '$taskId')";
+                $mysqli->query($query);
+            }
         }
     }
 }
