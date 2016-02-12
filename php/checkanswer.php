@@ -32,7 +32,7 @@ if (isset($_POST)) {
         $studentId = $_POST['studentid'];
         $taskId = $_POST['taskid'];
 
-        $query = "UPDATE students_tasks SET rating = '$rating' WHERE student_id = '$studentId'";
+        $query = "UPDATE students_tasks SET rating = '$rating' WHERE student_id = '$studentId' AND task_id = '$taskId'";
         $mysqli->query($query);
         for($i = 0; $i < count($teacherAnswers); $i++){
             $answer = $teacherAnswers[$i];
