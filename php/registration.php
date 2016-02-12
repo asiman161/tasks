@@ -15,7 +15,7 @@ if(isset($_POST)){
         $fatherName = $_POST['fathername'];
         $login = $_POST['login'];
         $password = $_POST['password'];
-
+        //TODO: сделать нормальную регистрацию, по группам
         $query = "INSERT INTO students (l_name, f_name, father_name, user_login, user_password, group_id) VALUES ('$lName', '$fName', '$fatherName', '$login', '$password', '1')";
         $mysqli->query($query);
         echo "true";

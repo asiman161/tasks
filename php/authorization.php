@@ -22,6 +22,7 @@ if (isset($_POST['login']) && isset($_POST['password'])) {
             echo "true";
         } else {
             echo "такого пользователя нет";
+            echo "--".$login[0]." ".$_POST['login']."--";
         }
     } else {
         $login = $_POST['login'];
