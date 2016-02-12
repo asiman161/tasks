@@ -6,48 +6,52 @@ var taskId = 0;
 var questionsId = [];
 var option = 0;
 var taskName = "";
+var timerTime = 0;
+var timerBool = true;
+
 function myAppendTo(data, to) {
     $(data).appendTo(to);
 }
 
 $(document).ready(function () {
-    $(document).on("click", "#section-right-top p", function () {
 
-        ///////delete
-        //TODO: удалить эту часть кода, создана временно для презентации альфы
-        var taskslist = $(this).text();
-        taskName = "";
-        taskslist = taskslist.substr(0, taskslist.indexOf("|"));
-        $.post("/php/taskscontrolpanel.php", {
-            taskslist: taskslist
-        }, function (req) {
-            var json = $.parseJSON(req);
-            $(".students-tasks").remove();
-            for (var i = 0; i < json.length; i++) {
-                taskName = json[i].task_name;
-                taskName = taskName.substr(5);
-                myAppendTo("<p class='students-tasks' data-task-id='" + json[i].task_id + "' data-student-id='" + json[i].student_id + "'>--" + taskName + "|" + json[i].l_name + "|" + json[i].f_name + "|" + json[i].rating + "</p>", "#section-right-bottom")
+    function timer() {
+        if (timerBool) {
+            timerTime--;
+            if (timerTime < 0) {
+                $("#answer-task").trigger("submit");
+                alert('время кончилось, работа была отправлена');
             }
-        });
-        ///////delete
+            else {
+                $("#timer-time").text("времени осталось: " + timerTime + " секунд");
+                setTimeout(timer, 1000);
+            }
+        }
+    }
 
+    $(document).on("click", "#section-right-top p", function () {
 
         numOfAnswers = 0;
         questionsId = [];
         taskId = $(this).attr("data-task-id");
         taskName = $(this).attr("data-task-name");
         var taskTime = $(this).attr("data-task-time");
+        timerTime = taskTime * 60 + 1; //кол-во секунд
         option = parseInt($("#get-option").val());
         if (typeof option !== 'number' || isNaN(option)) {
             alert("неверно указан вариант");
             return;
         }
         if (confirm("Для работы \"" + taskName + "\" отведено " + taskTime + " минут\nВаш вариант " + option + "\n" + "Вы готовы начать?")) {
+
             $.post("/php/taskspanel.php", {
                 getQuestions: taskId,
                 option: option
             }, function (req) {
                 $("#section-left").empty();
+                $("<p id='timer-time'>времени осталось: " + timerTime + " секунд" + "</p>").appendTo("#section-left");
+                timerBool = true;
+                timer();
                 if (req != "") {
                     var json = $.parseJSON(req);
                     myAppendTo("<p>" + taskName + "</p>", "#section-left");
@@ -56,18 +60,24 @@ $(document).ready(function () {
                         numOfAnswers++;
                         questionsId[i] = json[i].question_id;
                         myAppendTo("<p>" + (i + 1) + ")вопрос - " + json[i].question_text + "</p>", "#answer-task");
-                        myAppendTo("<textarea class='answer-textarea'>", "#answer-task")
+                        myAppendTo("<textarea class='answer-textarea'>", "#answer-task");
                     }
-                    myAppendTo("<input type='submit' value='отправить ответ'/>", "#answer-task")
+                    myAppendTo("<input type='submit' value='отправить ответ'/>", "#answer-task");
                 }
             });
             $.post("/php/answertask.php", {
                 startanswertask: "",
-                taskid: taskId
+                taskid: taskId,
+                option: option
             }, function (req) {
                 //alert(req);
-                if (req === "false")
-                    alert("данная работа была уже начата")
+                if (req === "false") {
+                    alert("данная работа была уже начата(вы можете продолжить, если работа не была отправлена)");
+                } else if (req === "wrong option") {
+                    $("#section-left").empty();
+                    timerBool = false;
+                    alert("такого варианта не существует")
+                }
             });
         } else {
             //alert("not ready")
@@ -75,6 +85,7 @@ $(document).ready(function () {
     });
 
     $(document).on("submit", "#answer-task", function () {
+        timerBool = false;
         var answers = "";
         var answerText = "";
         for (var i = 0; i < numOfAnswers; i++) {
@@ -90,14 +101,11 @@ $(document).ready(function () {
             answers: answers,
             questionid: questionsId,
             taskid: taskId,
-            option : option
+            option: option
         }, function (req) {
             //alert(taskId);
             $("#section-left").empty();
         });
-
-
-
 
         return false;
     });

@@ -13,16 +13,17 @@
 
     </script>
 </head>
-<body onunload="alert('wow')">
-<a href="index.html">student name</a><br/>
+<body>
+<a href="index.html">student name</a>
+<input type="button" id="log-out" value="выйти"/><br/>
 <select id="select-groups">
     <option selected disabled>выбор преподавателя</option>
 </select>
-<input id="get-option" type="number" maxlength="1" placeholder="выбор варианта">
+<input id="get-option" type="number" placeholder="выбор варианта">
+<input id="get-completed-tasks" type="button" value="показать законченные работы">
 
 <section id="content">
-    <section id="section-left">
-    </section>
+    <section id="section-left"></section>
     <section id="section-right-top"></section>
     <section id="section-right-bottom"></section>
 </section>

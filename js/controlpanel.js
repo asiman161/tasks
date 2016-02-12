@@ -99,5 +99,15 @@ $(document).ready(function () {
                 }
             });
     });
+
+    $(document).on("click", "#log-out", function(){
+        $.post("/php/bd.php", {
+            logout : ""
+        }, function(req){
+            if(req === "true"){
+                window.location.href = "/teacher.html";
+            }
+        }) ;
+    });
 });
 

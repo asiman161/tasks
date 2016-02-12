@@ -13,3 +13,9 @@ if ($mysqli->connect_errno) {
     echo "Не удалось подключиться: %s\n".$mysqli->connect_error;
     exit();
 }
+
+if(isset($_POST['logout'])){
+    $_SESSION = array();
+    session_destroy();
+    echo "true";
+}

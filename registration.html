@@ -26,8 +26,6 @@
                         window.location.href = "/index.html";
                     }
                 });
-
-
                 return false;
             })
         });
@@ -36,12 +34,13 @@
 <body>
 <form id="sign">
     <!--TODO: установить полям логина и пароля минимальную длину, только английский, блокировка спец символов-->
-    <input type="text" id="f-name" maxlength="30" placeholder="имя" required><br>
-    <input type="text" id="l-name" maxlength="30" placeholder="фамилия" required><br>
-    <input type="text" id="father-name" maxlength="30" placeholder="отчество" required><br>
-    <input type="text" id="user-login" maxlength="30" placeholder="логин" required><br>
-    <input type="password" id="user-password" maxlength="30" placeholder="пароль" required><br>
-    <input type="submit">
+    <input type="text" id="f-name" placeholder="имя" pattern="[A-Za-zА-Яа-яЁё]{5,24}" required><br>
+    <input type="text" id="l-name" placeholder="фамилия" pattern="[A-Za-zА-Яа-яЁё]{5,24}" required><br>
+    <input type="text" id="father-name" placeholder="отчество" pattern="[A-Za-zА-Яа-яЁё]{5,24}" required><br>
+    <input type="text" id="user-login" placeholder="логин" pattern="[A-Za-z0-9]{5,24}" required><br>
+    <input type="password" id="user-password" placeholder="пароль" pattern="[A-Za-z0-9]{5,24}" required><br>
+    <input type="submit" value="зарегистрироваться">
 </form>
+<a href="index.html">авторизация</a>
 </body>
 </html>

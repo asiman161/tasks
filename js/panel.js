@@ -8,13 +8,14 @@ $(document).ready(function () {
         loadingpanel: "",
         loadingteachers: ""
     }, function (req) {
-        var json = $.parseJSON(req);
-        for (var i = 0; i < json.length; i++) {
-            teachers[json[i].l_name] = json[i].teacher_id;
-            $("<option>" + json[i].l_name + "</option>").appendTo("#select-groups").attr("data-teacher-id", json[i].teacher_id);
+        if(req != "") {
+            var json = $.parseJSON(req);
+            for (var i = 0; i < json.length; i++) {
+                teachers[json[i].l_name] = json[i].teacher_id;
+                $("<option>" + json[i].l_name + "</option>").appendTo("#select-groups").attr("data-teacher-id", json[i].teacher_id);
+            }
         }
     });
-    
 
     $(document).on("change", "#select-groups", function () {
         var teacherId = teachers[$(this).val()];
@@ -40,4 +41,55 @@ $(document).ready(function () {
         });
     });
 
+    $(document).on("click", "#get-completed-tasks", function () {
+        $("#section-right-bottom").empty();
+        var taskName = "";
+        $.post("/php/taskspanel.php", {
+            getcompletedtasks: ""
+        }, function (req) {
+            if (req != "") {
+                var json = $.parseJSON(req);
+                for (var i = 0; i < json.length; i++) {
+                    taskName = json[i].task_name;
+                    taskName = taskName.substr(5);
+                    $("<p class='completed-tasks-list'>" + taskName + "|" + json[i].create_date + "|" + json[i].task_time + " минут|" + json[i].rating + "</p>").appendTo("#section-right-bottom").attr({
+                        "data-task-id": json[i].task_id,
+                        "data-task-time": json[i].task_time,
+                        "data-task-name": taskName
+                    });
+                }
+            }
+        });
+    });
+
+    $(document).on("click", ".completed-tasks-list", function () {
+        //alert($(this).val());
+        //alert($(this).text());
+        $("#section-left").empty();
+        var taskId = $(this).attr("data-task-id");
+        $.post("/php/taskspanel.php", {
+            showstudentanswers: "",
+            taskid: taskId
+        }, function (req) {
+            if (req != "") {
+                var json = $.parseJSON(req);
+                for (var i = 0; i < json.length; i++) {
+                    if(typeof json[i].answer_teacher_text === "object"){
+                        json[i].answer_teacher_text = "-";
+                    }
+                    $("<p>" + (i+1) + ")вопрос: " + json[i].question_text + "</p>").add("<p>" + "ваш ответ: " + json[i].answer_text + "</p>").add("<p>" + "ответ преподавателя: " + json[i].answer_teacher_text + "</p><br/>").appendTo("#section-left");
+                }
+            }
+        });
+    });
+
+    $(document).on("click", "#log-out", function(){
+        $.post("/php/bd.php", {
+            logout : ""
+        }, function(req){
+            if(req === "true"){
+                window.location.href = "/index.html";
+            }
+        }) ;
+    });
 });
