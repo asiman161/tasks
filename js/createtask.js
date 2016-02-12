@@ -5,6 +5,7 @@
 
 var numOfQuestions = 0;
 var numOfOptions = 0;
+
 function myAppendTo(data, to) {
     $(data).appendTo(to);
 }

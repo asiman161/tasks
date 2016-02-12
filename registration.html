@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $(document).on("submit", "#sign", function(){
+                var fName = $("#f-name").val();
+                var lName = $("#l-name").val();
+                var fatherName = $("#father-name").val();
+                var login = $("#user-login").val();
+                var password = $("#user-password").val();
+                $.post("/php/registration.php", {
+                    registration : "",
+                    fname : fName,
+                    lname : lName,
+                    fathername : fatherName,
+                    login : login,
+                    password : password
+                }, function(req){
+                    //alert(req);
+                    if(req == 'true') {
+                        alert("вы зарегистрированы");
+                        window.location.href = "/index.html";
+                    }
+                });
+
+
+                return false;
+            })
+        });
+    </script>
+</head>
+<body>
+<form id="sign">
+    <input type="text" id="f-name" maxlength="30" placeholder="имя" required><br>
+    <input type="text" id="l-name" maxlength="30" placeholder="фамилия" required><br>
+    <input type="text" id="father-name" maxlength="30" placeholder="отчество" required><br>
+    <input type="text" id="user-login" maxlength="30" placeholder="логин" required><br>
+    <input type="password" id="user-password" maxlength="30" placeholder="пароль" required><br>
+    <input type="submit">
+</form>
+</body>
+</html>

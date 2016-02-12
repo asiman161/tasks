@@ -32,6 +32,7 @@ if (isset($_POST)) {
             $answers = $_POST['answers'];
             $answers = explode("|", $_POST['answers']);
             $questionId = $_POST['questionid'];
+            $option = $_POST['option'];
             $time = time();
 
             $query = "SELECT start_time FROM tasks_completed WHERE task_id = '$taskId' and student_id = (SELECT student_id FROM students WHERE user_login = '$studentLogin')";
@@ -42,7 +43,7 @@ if (isset($_POST)) {
             for ($i = 0; $i < count($questionId); $i++) {
                 $question = $questionId[$i];
                 $answer = $answers[$i];
-                $query = "INSERT INTO control_answers(question_id, student_id, answer_text) VALUES ('$question', (SELECT student_id FROM students WHERE user_login = '$studentLogin'),'$answer')";
+                $query = "INSERT INTO control_answers(question_id, task_id, task_option, student_id, answer_text) VALUES ('$question','$taskId' ,'$option' , (SELECT student_id FROM students WHERE user_login = '$studentLogin'),'$answer')";
                 $mysqli->query($query);
             }
             $query = "INSERT INTO students_tasks(student_id, task_id, create_date) VALUES ((SELECT student_id FROM students WHERE user_login = '$studentLogin'), '$taskId', curdate())";

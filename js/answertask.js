@@ -3,19 +3,41 @@
  */
 var numOfAnswers = 0;
 var taskId = 0;
-var questionId = [];
+var questionsId = [];
+var option = 0;
+var taskName = "";
 function myAppendTo(data, to) {
     $(data).appendTo(to);
 }
 
 $(document).ready(function () {
     $(document).on("click", "#section-right-top p", function () {
+
+        ///////delete
+        //TODO: удалить эту часть кода, создана временно для презентации альфы
+        var taskslist = $(this).text();
+        taskName = "";
+        taskslist = taskslist.substr(0, taskslist.indexOf("|"));
+        $.post("/php/taskscontrolpanel.php", {
+            taskslist: taskslist
+        }, function (req) {
+            var json = $.parseJSON(req);
+            $(".students-tasks").remove();
+            for (var i = 0; i < json.length; i++) {
+                taskName = json[i].task_name;
+                taskName = taskName.substr(5);
+                myAppendTo("<p class='students-tasks' data-task-id='" + json[i].task_id + "' data-student-id='" + json[i].student_id + "'>--" + taskName + "|" + json[i].l_name + "|" + json[i].f_name + "|" + json[i].rating + "</p>", "#section-right-bottom")
+            }
+        });
+        ///////delete
+
+
         numOfAnswers = 0;
-        questionId = [];
+        questionsId = [];
         taskId = $(this).attr("data-task-id");
-        var taskName = $(this).attr("data-task-name");
+        taskName = $(this).attr("data-task-name");
         var taskTime = $(this).attr("data-task-time");
-        var option = parseInt($("#get-option").val());
+        option = parseInt($("#get-option").val());
         if (typeof option !== 'number' || isNaN(option)) {
             alert("неверно указан вариант");
             return;
@@ -32,7 +54,7 @@ $(document).ready(function () {
                     myAppendTo("<form id='answer-task'></form>", "#section-left");
                     for (var i = 0; i < json.length; i++) {
                         numOfAnswers++;
-                        questionId[i] = json[i].question_id;
+                        questionsId[i] = json[i].question_id;
                         myAppendTo("<p>" + (i + 1) + ")вопрос - " + json[i].question_text + "</p>", "#answer-task");
                         myAppendTo("<textarea class='answer-textarea'>", "#answer-task")
                     }
@@ -62,13 +84,21 @@ $(document).ready(function () {
             answers += answerText + "|";
             $(".answer-textarea:first").remove();
         }
+        //alert(option);
+        //alert(questionsId);
         $.post("/php/answertask.php", {
             answers: answers,
-            questionid: questionId,
-            taskid: taskId
+            questionid: questionsId,
+            taskid: taskId,
+            option : option
         }, function (req) {
-            //alert(req);
+            //alert(taskId);
+            $("#section-left").empty();
         });
+
+
+
+
         return false;
     });
 });
