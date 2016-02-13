@@ -10,6 +10,7 @@
                 var fName = $("#f-name").val();
                 var lName = $("#l-name").val();
                 var fatherName = $("#father-name").val();
+                var groupName = $("#group-name").val();
                 var login = $("#user-login").val();
                 var password = $("#user-password").val();
                 $.post("/php/registration.php", {
@@ -17,6 +18,7 @@
                     fname : fName,
                     lname : lName,
                     fathername : fatherName,
+                    groupname : groupName,
                     login : login,
                     password : password
                 }, function(req){
@@ -24,6 +26,8 @@
                     if(req == 'true') {
                         alert("вы зарегистрированы");
                         window.location.href = "/index.html";
+                    } else {
+                        alert(req);
                     }
                 });
                 return false;
@@ -33,10 +37,11 @@
 </head>
 <body>
 <form id="sign">
-    <!--TODO: установить полям логина и пароля минимальную длину, только английский, блокировка спец символов-->
+
     <input type="text" id="f-name" placeholder="имя" pattern="[A-Za-zА-Яа-яЁё]{5,24}" required><br>
     <input type="text" id="l-name" placeholder="фамилия" pattern="[A-Za-zА-Яа-яЁё]{5,24}" required><br>
     <input type="text" id="father-name" placeholder="отчество" pattern="[A-Za-zА-Яа-яЁё]{5,24}" required><br>
+    <input type="text" id="group-name" placeholder="группа" pattern="[A-za-zА-Яа-яЁё0-9\-]{3,24}" required><br>
     <input type="text" id="user-login" placeholder="логин" pattern="[A-Za-z0-9]{5,24}" required><br>
     <input type="password" id="user-password" placeholder="пароль" pattern="[A-Za-z0-9]{5,24}" required><br>
     <input type="submit" value="зарегистрироваться">

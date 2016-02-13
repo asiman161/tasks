@@ -29,14 +29,16 @@ $(document).on("click", ".students-tasks", function () {
         if (req != "") {
             //alert(req);
             var json = $.parseJSON(req);
-            myAppendTo("<p>время, за которое была выполнена работа " +  json[0].task_time + " секунд</p>", "#section-left");
+            myAppendTo("<p>время, за которое была выполнена работа " + json[0].task_time + " секунд</p><br/>", "#section-left");
+            myAppendTo("<p id='show-rating'>" + "оценка: " + rating + "</p>", "#section-left");
+            myAppendTo("<input type='text' id='set-rating-input'/><br/>", "#section-left");
             for (var i = 0; i < json.length; i++) {
                 questionsId[i] = json[i].question_id;
                 numOfAnswers++;
                 myAppendTo("<p>" + (i + 1) + ") вопрос: " + json[i].question_text + "</p>", "#section-left");
                 myAppendTo("<p>ответ: " + json[i].answer_text + "</p>", "#section-left");
                 myAppendTo("<textarea class='teacher-answer' placeholder='описание ответа'/><br/>", "#section-left");
-                myAppendTo("<section class='buttons-rating' data-t='aaa'>" +
+                myAppendTo("<section class='buttons-rating'>" +
                     "<input type='button' class='button-rating' value='1' data-click='false'/> " +
                     "<input type='button' class='button-rating' value='0.7' data-click='false'/>" +
                     "<input type='button' class='button-rating' value='0.3' data-click='false'/>" +
@@ -54,37 +56,37 @@ $(document).on("click", ".button-rating", function () {
         $(this).parent(".buttons-rating").children(".button-rating").attr("data-click", "true");
         rating += parseFloat($(this).val());
         counterButtonsClicks++;
+        rating = parseFloat(parseFloat(rating).toFixed(1));
+        if (!isNaN(rating)) {
+            $("#show-rating").text("оценка: " + rating);
+        }
     }
 });
 
+$(document).on("change", "#set-rating-input", function () {
+    rating = parseFloat($("#set-rating-input").val());
+    $("#show-rating").text("оценка: " + rating);
+});
+
 $(document).on("click", "#set-rating", function () {
-    if (counterButtonsClicks === numOfAnswers) {
-        /*var taskOptions = $("#num-of-options").val();
-        for (var i = 0; i < numOfQuestions * taskOptions; i++) {
-            questionText = $(".question-textarea").val() + $(".question-textarea").attr("name");
-            if (questionText.length >= 5 && taskTime > 0 && taskTime <= 99 && taskOptions > 0 && taskOptions < 10) {
-                questions += questionText + "|";
-                $(".question-textarea:first").remove();
-            } else {
-                alert('минимальная длина вопроса не может быть меньше 5 символов или не указано(или слишком большое) время');
-                return false;
-            }
-        }*/
+    if (counterButtonsClicks === numOfAnswers || rating === parseFloat($("#set-rating-input").val())) {
+        rating.toFixed(1);
         var teacherAnswers = [];
         var teacherAnswerText = "";
-        for(var i = 0; i < numOfAnswers; i++){
+        for (var i = 0; i < numOfAnswers; i++) {
             teacherAnswerText = $(".teacher-answer").val();
-            if(teacherAnswerText == "") teacherAnswerText = "-";
+            if (teacherAnswerText == "") teacherAnswerText = "-";
             teacherAnswers[i] = teacherAnswerText;
             $(".teacher-answer:first").remove();
         }
+        alert(rating);
         $.post("/php/checkanswer.php", {
-            sendrating : rating,
-            teacheranswers : teacherAnswers,
+            sendrating: rating,
+            teacheranswers: teacherAnswers,
             questionid: questionsId,
-            studentid : studentId,
-            taskid : taskId
-        }, function(req){
+            studentid: studentId,
+            taskid: taskId
+        }, function () {
             $("#section-left").empty();
         });
     }
@@ -97,33 +99,6 @@ $(document).on("click", "#drop-rating", function () {
     rating = .0;
     counterButtonsClicks = 0;
     $(".button-rating").attr("data-click", "false");
+    $("#set-rating-input").val("");
+    $("#show-rating").text("оценка: " + rating);
 });
-
-/*
- $(document).on("click", ".students-tasks", function () {
- $(".task").remove();
- $("#section-left").empty();
- $("<p class='task'>" + $(this).text() + "</p>").appendTo("#section-left");
- });
- */
-
-
-/*
- $(document).on("click", ".tasks-list", function () {
- var $el = $(this);
- var taskslist = $(this).text();
- var taskName = "";
- taskslist = taskslist.substr(0, taskslist.indexOf("|"));
- $.post("/php/taskscontrolpanel.php", {
- taskslist: taskslist
- }, function (req) {
- var json = $.parseJSON(req);
- $(".students-tasks").remove();
- for (var i = 0; i < json.length; i++) {
- taskName = json[i].task_name;
- taskName = taskName.substr(5);
- $el.after("<p class='students-tasks'>--" + taskName + "|" + json[i].l_name + "|" + json[i].f_name + "|" + json[i].rating + "</p>");
- }
- });
- });
- */

@@ -13,11 +13,19 @@ if(isset($_POST)){
         $lName = $_POST['lname'];
         $fName = $_POST['fname'];
         $fatherName = $_POST['fathername'];
+        $groupName = $_POST['groupname'];
         $login = $_POST['login'];
         $password = $_POST['password'];
-        //TODO: сделать нормальную регистрацию, по группам
-        $query = "INSERT INTO students (l_name, f_name, father_name, user_login, user_password, group_id) VALUES ('$lName', '$fName', '$fatherName', '$login', '$password', '1')";
-        $mysqli->query($query);
-        echo "true";
+
+        $query = "SELECT group_id FROM groups WHERE group_name = '$groupName'";
+        $result = $mysqli->query($query)->fetch_row();
+        if($result[0] != "") {
+            $groupId = $result[0];
+            $query = "INSERT INTO students (l_name, f_name, father_name, user_login, user_password, group_id) VALUES ('$lName', '$fName', '$fatherName', '$login', '$password', '$groupId')";
+            $mysqli->query($query);
+            echo "true";
+        } else {
+            echo "такой группы не существует";
+        }
     }
 }
