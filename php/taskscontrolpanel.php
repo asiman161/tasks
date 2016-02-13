@@ -43,17 +43,22 @@ if (isset($_POST['taskslist'])) {
 }
 if (isset($_POST['taskname'])) {
     $taskname = $_SESSION['teacherPrefix'] . $_POST['taskname'];
-    $query = "SELECT task_name, task_type, create_date FROM tasks WHERE teacher_id = (SELECT teacher_id FROM teachers WHERE user_login = '" . $_SESSION['teacherLogin'] . "') AND task_name = '$taskname'";
+    $teacherId = $_SESSION['teacherId'];
+    $query = "SELECT task_name, task_type, create_date FROM tasks WHERE teacher_id = '$teacherId' AND task_name = '$taskname'";
+    //$query = "SELECT task_name, task_type, create_date FROM tasks WHERE teacher_id = (SELECT teacher_id FROM teachers WHERE user_login = '" . $_SESSION['teacherLogin'] . "') AND task_name = '$taskname'";
     posts($mysqli, $query);
 } else if (isset($_POST['year']) || isset($_POST['month']) || isset($_POST['day'])) {
     $date = $_POST['year'] . "-" . $_POST['month'] . "-" . $_POST['day'];
-    $query = "SELECT task_name, task_type, create_date FROM tasks WHERE teacher_id = (SELECT teacher_id FROM teachers WHERE user_login = '" . $_SESSION['teacherLogin'] . "') AND create_date = '$date'";
+    $teacherId = $_SESSION['teacherId'];
+    $query = "SELECT task_name, task_type, create_date FROM tasks WHERE teacher_id = '$teacherId' AND create_date = '$date'";
+    //$query = "SELECT task_name, task_type, create_date FROM tasks WHERE teacher_id = (SELECT teacher_id FROM teachers WHERE user_login = '" . $_SESSION['teacherLogin'] . "') AND create_date = '$date'";
     posts($mysqli, $query);
 
 } else if (isset($_POST['loadingpanel'])) {
     if (isset($_POST['loadinggroups'])) {
-        $teacherLogin = $_SESSION['teacherLogin'];
-        $query = "SELECT group_id FROM groups_and_teachers WHERE teacher_id = (SELECT teacher_id FROM teachers WHERE user_login = '$teacherLogin');";
+        //$teacherLogin = $_SESSION['teacherLogin']; //TODO: удалить после проверка корректности вывода
+        $teacherId = $_SESSION['teacherId'];
+        $query = "SELECT group_id FROM groups_and_teachers WHERE teacher_id = '$teacherId'";
         $result = $mysqli->query($query);
         $array_tasks = array();
         $query = "";
@@ -66,8 +71,9 @@ if (isset($_POST['taskname'])) {
             posts($mysqli, $query);
         }
     } else if (isset($_POST['loadingteachers'])) {
-        $studentLogin = $_SESSION['studentLogin'];
-        $query = "SELECT teacher_id FROM groups_and_teachers WHERE group_id = (SELECT group_id FROM students WHERE user_login = '$studentLogin');";
+        //$studentLogin = $_SESSION['studentLogin']; //TODO: удалить после проверка корректности вывода
+        $studentId = $_SESSION['studentId'];
+        $query = "SELECT teacher_id FROM groups_and_teachers WHERE group_id = (SELECT group_id FROM students WHERE student_id = '$studentId');";
         $result = $mysqli->query($query);
         $array_tasks = array();
         $query = "";

@@ -23,7 +23,7 @@ if (isset($_POST)) {
     if (isset($_POST['answers'])) {
         $taskId = $_POST['taskid'];
         $studentId = $_POST['studentid'];
-        $query = "SELECT question_text, control_answers.question_id, control_answers.task_id, control_answers.student_id, task_option, answer_text, task_time FROM control_answers, tasks_completed, questions WHERE control_answers.student_id = '$studentId'  AND tasks_completed.task_time = (SELECT task_time FROM tasks_completed WHERE student_id = '$studentId' AND task_id = '$taskId') AND questions.question_id = control_answers.question_id AND control_answers.task_option = (SELECT DISTINCT task_option FROM control_answers WHERE student_id = '$studentId' AND task_id = '$taskId')";
+        $query = "SELECT DISTINCT question_text, control_answers.question_id, control_answers.task_id, control_answers.student_id, task_option, answer_text, task_time FROM control_answers, tasks_completed, questions WHERE control_answers.student_id = '$studentId'  AND tasks_completed.task_time = (SELECT task_time FROM tasks_completed WHERE student_id = '$studentId' AND task_id = '$taskId') AND questions.question_id = control_answers.question_id AND control_answers.task_option = (SELECT DISTINCT task_option FROM control_answers WHERE student_id = '$studentId' AND task_id = '$taskId') AND control_answers.task_id = '$taskId'";
         posts($mysqli, $query);
     } else if (isset($_POST['sendrating'])) {
         $rating = $_POST['sendrating'];

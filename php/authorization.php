@@ -15,14 +15,16 @@ if (isset($_POST['login']) && isset($_POST['password'])) {
         $query = "SELECT user_login FROM teachers WHERE user_login='$login' AND user_password='$password'";
         $login = $mysqli->query($query)->fetch_row();
         if ($login[0] == $_POST['login']) {
-            $query = "SELECT prefix FROM teachers WHERE user_login='$login[0]'";
-            $prefix = $mysqli->query($query)->fetch_row();
-            $_SESSION['teacherPrefix'] = $prefix[0];
+            $query = "SELECT prefix, teacher_id FROM teachers WHERE user_login='$login[0]'";
+            $result = $mysqli->query($query)->fetch_row();
+            /*$query = "SELECT teacher_id FROM teachers WHERE user_login='$login[0]'";
+            $teacherId = $mysqli->query($query)->fetch_row();*/
+            $_SESSION['teacherPrefix'] = $result[0];
+            $_SESSION['teacherId'] = $result[1];
             $_SESSION['teacherLogin'] = $login[0];
             echo "true";
         } else {
             echo "такого пользователя нет";
-            echo "--".$login[0]." ".$_POST['login']."--";
         }
     } else {
         $login = $_POST['login'];
@@ -30,10 +32,13 @@ if (isset($_POST['login']) && isset($_POST['password'])) {
         $query = "SELECT user_login FROM students WHERE user_login='$login' AND user_password='$password'";
         $login = $mysqli->query($query)->fetch_row();
         if($login[0] == $_POST['login']){
-            $query = "SELECT group_id FROM students WHERE user_login='$login[0]'";
-            $studentGroup = $mysqli->query($query)->fetch_row();
+            $query = "SELECT group_id,student_id FROM students WHERE user_login='$login[0]'";
+            $result = $mysqli->query($query)->fetch_row();
+            /*$query = "SELECT student_id FROM students WHERE user_login = '$login[0]'";
+            $studentId = $mysqli->query($query)->fetch_row();*/
             $_SESSION['studentLogin'] = $login[0];
-            $_SESSION['studentGroup'] = $studentGroup[0];
+            $_SESSION['studentGroup'] = $result[0];
+            $_SESSION['studentId'] = $result[1];
             echo "true";
         } else {
             echo "Такого пользователя нет";
@@ -42,8 +47,3 @@ if (isset($_POST['login']) && isset($_POST['password'])) {
 } else {
     echo "нет поста";
 }
-
-
-/*while (($row = $result->fetch_assoc()) != false) {
-    print_r($row['l_name']);
-}*/
