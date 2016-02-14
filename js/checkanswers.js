@@ -19,8 +19,6 @@ $(document).on("click", ".students-tasks", function () {
     $("#section-left").empty();
     taskId = $(this).attr("data-task-id");
     studentId = $(this).attr("data-student-id");
-    alert(taskId);
-    alert(studentId);
     $("<p class='task'>" + $(this).text() + "</p>").appendTo("#section-left");
     $.post("/php/checkanswer.php", {
         answers: "",
@@ -28,7 +26,6 @@ $(document).on("click", ".students-tasks", function () {
         studentid: studentId
     }, function (req) {
         if (req != "") {
-            alert(req);
             var json = $.parseJSON(req);
             myAppendTo("<p>время, за которое была выполнена работа " + json[0].task_time + " секунд</p><br/>", "#section-left");
             myAppendTo("<p id='show-rating'>" + "оценка: " + rating + "</p>", "#section-left");

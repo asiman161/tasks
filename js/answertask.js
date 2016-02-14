@@ -7,7 +7,7 @@ var questionsId = [];
 var option = 0;
 var taskName = "";
 var timerTime = 0;
-var timerBool = true;
+var myTimer;
 
 function myAppendTo(data, to) {
     $(data).appendTo(to);
@@ -16,17 +16,16 @@ function myAppendTo(data, to) {
 $(document).ready(function () {
 
     function timer() {
-        if (timerBool) {
-            timerTime--;
-            if (timerTime < 0) {
-                $("#answer-task").trigger("submit");
-                alert('время кончилось, работа была отправлена');
-            }
-            else {
-                $("#timer-time").text("времени осталось: " + timerTime + " секунд");
-                setTimeout(timer, 1000);
-            }
+        timerTime--;
+        if (timerTime < 0) {
+            $("#answer-task").trigger("submit");
+            alert('время кончилось, работа была отправлена');
         }
+        else {
+            $("#timer-time").text("времени осталось: " + timerTime + " секунд");
+            myTimer = setTimeout(timer, 1000);
+        }
+
     }
 
     $(document).on("click", "#section-right-top p", function () {
@@ -50,7 +49,7 @@ $(document).ready(function () {
             }, function (req) {
                 $("#section-left").empty();
                 $("<p id='timer-time'>времени осталось: " + timerTime + " секунд" + "</p>").appendTo("#section-left");
-                timerBool = true;
+                clearTimeout(myTimer);
                 timer();
                 if (req != "") {
                     var json = $.parseJSON(req);
@@ -75,7 +74,7 @@ $(document).ready(function () {
                     alert("данная работа была уже начата(вы можете продолжить, если работа не была отправлена)");
                 } else if (req === "wrong option") {
                     $("#section-left").empty();
-                    timerBool = false;
+                    clearTimeout(myTimer);
                     alert("такого варианта не существует")
                 }
             });
@@ -85,7 +84,7 @@ $(document).ready(function () {
     });
 
     $(document).on("submit", "#answer-task", function () {
-        timerBool = false;
+        clearTimeout(myTimer);
         var answers = "";
         var answerText = "";
         for (var i = 0; i < numOfAnswers; i++) {
@@ -102,7 +101,7 @@ $(document).ready(function () {
             questionid: questionsId,
             taskid: taskId,
             option: option
-        }, function (req) {
+        }, function () {
             //alert(taskId);
             $("#section-left").empty();
         });

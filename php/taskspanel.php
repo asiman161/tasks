@@ -28,7 +28,7 @@ if (isset($_POST)) {
     } else if (isset($_POST['getcompletedtasks'])) {
         //$studentLogin = $_SESSION['studentLogin']; //TODO: удалить после проверка корректности вывода
         $studentId = $_SESSION['studentId'];
-        $query = "SELECT students_tasks.task_id, task_name, students_tasks.create_date, task_time,rating FROM students_tasks, tasks WHERE student_id = '$studentId' && students_tasks.task_id = tasks.task_id";
+        $query = "SELECT students_tasks.task_id, task_name, students_tasks.create_date, task_time,rating FROM students_tasks, tasks WHERE student_id = '$studentId' && students_tasks.task_id = tasks.task_id ORDER BY task_id ASC";
         //$query = "SELECT students_tasks.task_id, task_name, students_tasks.create_date, task_time,rating FROM students_tasks, tasks WHERE student_id = (SELECT student_id FROM students WHERE user_login = '$studentLogin') && students_tasks.task_id = tasks.task_id";
         posts($mysqli, $query);
     } else if (isset($_POST['showstudentanswers'])) {

@@ -31,15 +31,17 @@ $(document).on("click", "#make-control-task", function () {
 });
 
 $(document).on("submit", "#create-task", function () {
-    var questions = "";
+    var questions = [];
+    var taskOptionsMas = [];
     var questionText = "";
     var taskTime = parseInt($("#time-of-questions").val());
     var taskname = $("#name-of-task").val();
     var taskOptions = $("#num-of-options").val();
     for (var i = 0; i < numOfQuestions * taskOptions; i++) {
-        questionText = $(".question-textarea").val() + $(".question-textarea").attr("name");
-        if (questionText.length >= 5 && taskTime > 0 && taskTime <= 99 && taskOptions > 0 && taskOptions < 10) {
-            questions += questionText + "|";
+        questionText = $(".question-textarea").val();
+        if (questionText.length >= 5 && taskTime > 0 && taskTime <= 99 && taskOptions > 0 && taskOptions < 20) {
+            questions[i] = questionText;
+            taskOptionsMas[i] = $(".question-textarea").attr("name");
             $(".question-textarea:first").remove();
         } else {
             alert('минимальная длина вопроса не может быть меньше 5 символов или не указано(или слишком большое) время');
@@ -47,14 +49,15 @@ $(document).on("submit", "#create-task", function () {
         }
     }
     $("#section-left").empty();
-    questions = questions.substring(0, questions.length - 1);
     numOfQuestions = 0;
     $.post("/php/createtask.php", {
         taskname: taskname,
         questions: questions,
         tasktype: "контрольная",
-        tasktime: taskTime
+        tasktime: taskTime,
+        taskoptionsmas : taskOptionsMas
     }, function (req) {
+        alert(req);
         if (req === 'false')
             alert('ошибка при создании\nвозможно задание с этим именем уже существует');
         else
