@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $(document).on("submit", "#sign", function(){
+                var fName = $("#f-name").val();
+                var lName = $("#l-name").val();
+                var fatherName = $("#father-name").val();
+                var groupName = $("#group-name").val();
+                var login = $("#user-login").val();
+                var password = $("#user-password").val();
+                $.post("/php/registration.php", {
+                    registration : "",
+                    fname : fName,
+                    lname : lName,
+                    fathername : fatherName,
+                    groupname : groupName,
+                    login : login,
+                    password : password
+                }, function(req){
+                    //alert(req);
+                    if(req == 'true') {
+                        alert("вы зарегистрированы");
+                        window.location.href = "/index.html";
+                    } else {
+                        alert(req);
+                    }
+                });
+                return false;
+            })
+        });
+    </script>
+</head>
+<body>
+<form id="sign">
+
+    <input type="text" id="f-name" placeholder="имя" pattern="[A-Za-zА-Яа-яЁё]{5,24}" required><br>
+    <input type="text" id="l-name" placeholder="фамилия" pattern="[A-Za-zА-Яа-яЁё]{5,24}" required><br>
+    <input type="text" id="father-name" placeholder="отчество" pattern="[A-Za-zА-Яа-яЁё]{5,24}" required><br>
+    <input type="text" id="group-name" placeholder="группа" pattern="[A-za-zА-Яа-яЁё0-9\-]{3,24}" required><br>
+    <input type="text" id="user-login" placeholder="логин" pattern="[A-Za-z0-9]{5,24}" required><br>
+    <input type="password" id="user-password" placeholder="пароль" pattern="[A-Za-z0-9]{5,24}" required><br>
+    <input type="submit" value="зарегистрироваться">
+</form>
+<a href="index.html">авторизация</a>
+</body>
+</html>
