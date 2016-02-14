@@ -45,5 +45,5 @@ if (isset($_POST['login']) && isset($_POST['password'])) {
         }
     }
 } else {
-    echo "нет поста";
+    echo "нет поста"."\n".$_POST['login']."---";
 }
