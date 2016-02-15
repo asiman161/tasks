@@ -77,6 +77,7 @@ $(document).on("click", "#set-rating", function () {
             teacherAnswers[i] = teacherAnswerText;
             $(".teacher-answer:first").remove();
         }
+        rating = parseFloat(parseFloat(rating).toFixed(1));
         alert(rating);
         $.post("/php/checkanswer.php", {
             sendrating: rating,

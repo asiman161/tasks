@@ -22,13 +22,14 @@ $(document).ready(function () {
             alert('время кончилось, работа была отправлена');
         }
         else {
-            $("#timer-time").text("времени осталось: " + timerTime + " секунд");
+            $("#timer-time").text("Осталось: " + timerTime + " секунд");
             myTimer = setTimeout(timer, 1000);
         }
 
     }
 
-    $(document).on("click", "#section-right-top p", function () {
+    $(document).on("click", "#section-right-top li", function () {
+    //$(document).on("click", "#section-right-top p", function () {
 
         numOfAnswers = 0;
         questionsId = [];
@@ -43,6 +44,30 @@ $(document).ready(function () {
         }
         if (confirm("Для работы \"" + taskName + "\" отведено " + taskTime + " минут\nВаш вариант " + option + "\n" + "Вы готовы начать?")) {
 
+            $.post("/php/taskspanel.php", {
+                getQuestions: taskId,
+                option: option
+            }, function (req) {
+                $("#section-left").empty();
+                /*$("<div class='page-header'><h1><small id='timer-time'>Осталось:" + timerTime + " секунд" + "</small></h1></div>").appendTo("#section-left");
+                clearTimeout(myTimer);
+                timer();*/
+                if (req != "") {
+                    var json = $.parseJSON(req);
+                    //myAppendTo("<p>" + taskName + "</p>", "#section-left");
+                    $("<div class='page-header'><h1 style='text-align: center;'>" + taskName + " <small id='timer-time'>Осталось:" + timerTime + " секунд" + "</small></h1></div>").appendTo("#section-left");
+                    clearTimeout(myTimer);
+                    timer();
+                    myAppendTo("<form id='answer-task'></form>", "#section-left");
+                    for (var i = 0; i < json.length; i++) {
+                        numOfAnswers++;
+                        questionsId[i] = json[i].question_id;
+                        myAppendTo(" <div class='bs-callout bs-callout-info'><h4>" + (i + 1) + ")Вопрос - " + json[i].question_text + "</h4>" + "<textarea class='answer-textarea form-control'/></div>", "#answer-task");
+                    }
+                    myAppendTo("<input style='margin:10px 0 10px 10px;' type='submit' class='btn btn-success' value='Oтправить ответ'/>", "#answer-task");
+                }
+            });
+/*
             $.post("/php/taskspanel.php", {
                 getQuestions: taskId,
                 option: option
@@ -64,6 +89,7 @@ $(document).ready(function () {
                     myAppendTo("<input type='submit' value='отправить ответ'/>", "#answer-task");
                 }
             });
+*/
             $.post("/php/answertask.php", {
                 startanswertask: "",
                 taskid: taskId,
@@ -104,6 +130,7 @@ $(document).ready(function () {
         }, function () {
             //alert(taskId);
             $("#section-left").empty();
+            $("#get-completed-tasks").trigger("click");
         });
 
         return false;

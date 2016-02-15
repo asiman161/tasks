@@ -5,8 +5,10 @@
     <meta http-equiv="Cache-Control" content="private">
     <META HTTP-EQUIV="PRAGMA" CONTENT="NO-CACHE">
     <title>Title</title>
-    <link href="css/style.css" rel="stylesheet">
+    <link href="css/stylepanel.css" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <link href="css/panel.bootstrap.min.css" rel="stylesheet">
+
     <script src="js/panel.js"></script>
     <script src="js/answertask.js"></script>
     <script>
@@ -14,6 +16,63 @@
     </script>
 </head>
 <body>
+<div class="navbar navbar-default navbar-static-top" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <form class="navbar-form navbar-right" role="form">
+                <div class="form-group">
+                    <select id="select-groups" class="form-control">
+                        <!--<option selected disabled>выбор преподавателя</option>-->
+                    </select>
+                </div>
+                <div class="form-group">
+                    <input id="get-option" type="text" class="form-control bfh-number"
+                           placeholder="номер варианта">
+                </div>
+                <input id="get-completed-tasks" type="button" class="btn btn-success"
+                       value="Обновить"/>
+            </form>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-right">
+                <form class="navbar-form navbar-right" role="form">
+                    <input id="log-out" type="button" class="btn btn-danger" value="Выйти"/></form>
+            </ul>
+        </div><!--/.nav-collapse -->
+    </div>
+</div>
+
+<!--<div class="row">
+    <div class="col-md-3 section-left" id="section-right-top"></div>
+    <div class="col-md-6 section-center" id="section-left"></div>
+    <div class="col-md-3 section-right" id="section-right-bottom"></div>
+</div>-->
+<div id="container">
+    <div id="section-right-top" class=" section-left"></div>
+    <div id="section-left" class="section-center">
+        <div class="panel panel-primary"> <div class="panel-heading"><b>FAQ:</b></div>
+            <div class="panel-body">В левой части отображается список доступных работ выбранного учителя, которые можно выполнить, в них содержится
+                имя работы, тип работы, дата создания и время на её выполнение.<br>
+                Для смены учителя надо выбрать другого в выпадающем списке вверху слева.<br>
+                Что бы начать выполнение работы надо выбрать нужного учителя и вариант(вариант выбирается в центральном поле
+                вверху) и после этого нажать на нужную работу слева.<br>
+                В правой части отображается список работ, которые вы уже выполняли.<br>
+                В списке выполненных работ отображается имя работы, дата создания учителем и оценка, на которую вы выполнили
+                работу, если стоит "0" - работа еще не проверялась.<br>
+                Что бы увидеть описание работы выбирете нужную и нажмите на нее.<br></div> </div>
+
+    </div>
+    <div class="section-right">
+        <ul class="list-group">
+            <div id="section-right-bottom"></div>
+        </ul>
+    </div>
+</div>
+
+
+</body>
+<!--<body>
+
 <a href="index.html">student name</a>
 <input type="button" id="log-out" value="выйти"/><br/>
 <select id="select-groups">
@@ -27,5 +86,5 @@
     <section id="section-right-top"></section>
     <section id="section-right-bottom"></section>
 </section>
-</body>
+</body>-->
 </html>

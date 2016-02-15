@@ -19,10 +19,12 @@ $(document).ready(function () {
         }, function (req) {
             var json = $.parseJSON(req);
             $(".students-tasks").remove();
+            $(".my-clear").remove();
             for (var i = 0; i < json.length; i++) {
                 taskName = json[i].task_name;
                 taskName = taskName.substr(5);
-                $el.after("<p class='students-tasks' data-task-id='" + json[i].task_id + "' data-student-id='" + json[i].student_id + "'>--" + taskName + "|" + json[i].l_name + "|" + json[i].f_name + "|" + json[i].rating + "</p>");
+                $el.after("<li class='list-group-item node-treeview1 my-clear' style='background-color:#FCF8E3;border-bottom:1px solid #fff;'><span class='indent'></span><p class='students-tasks' data-task-id='" + json[i].task_id + "' data-student-id='" + json[i].student_id + "'>>> " + taskName + "|" + json[i].f_name + " " + json[i].l_name + "" + " <span class='badge pull-right'>" + json[i].rating + "</span></p></li>");
+                //$el.after("<p class='students-tasks' data-task-id='" + json[i].task_id + "' data-student-id='" + json[i].student_id + "'>--" + taskName + "|" + json[i].l_name + "|" + json[i].f_name + "|" + json[i].rating + "</p>");
             }
         });
     });
@@ -57,7 +59,8 @@ $(document).ready(function () {
             for (var i = 0; i < json.length; i++) {
                 taskName = json[i].task_name;
                 taskName = taskName.substr(5);
-                $("<p class='tasks-list'>" + taskName + "|" + json[i].task_type + "|" + json[i].create_date + "</p>").appendTo("#sectionRight");
+                $("<li class='list-group-item node-treeview1 tasks-list'>" + taskName + "|" + json[i].task_type + "|" + json[i].create_date + "</li>").appendTo("#sectionRight");
+                //$("<p class='tasks-list'>" + taskName + "|" + json[i].task_type + "|" + json[i].create_date + "</p>").appendTo("#sectionRight");
             }
         });
     });

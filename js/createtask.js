@@ -5,14 +5,16 @@
 
 var numOfQuestions = 0;
 var numOfOptions = 0;
+var taskTime = 0;
 
 function myAppendTo(data, to) {
     $(data).appendTo(to);
 }
 
-$(document).on("click", "#make-control-task", function () {
+$(document).on("submit", "#make-control-task", function () {
     numOfQuestions = parseInt($("#num-of-questions").val());
     numOfOptions = parseInt($("#num-of-options").val());
+    taskTime = parseInt($("#time-of-questions").val());
     if (numOfQuestions > 20) numOfQuestions = 20;
     $("#section-left").empty();
     if (numOfQuestions > 0) {
@@ -34,12 +36,10 @@ $(document).on("submit", "#create-task", function () {
     var questions = [];
     var taskOptionsMas = [];
     var questionText = "";
-    var taskTime = parseInt($("#time-of-questions").val());
     var taskname = $("#name-of-task").val();
-    var taskOptions = $("#num-of-options").val();
-    for (var i = 0; i < numOfQuestions * taskOptions; i++) {
+    for (var i = 0; i < numOfQuestions * numOfOptions; i++) {
         questionText = $(".question-textarea").val();
-        if (questionText.length >= 5 && taskTime > 0 && taskTime <= 99 && taskOptions > 0 && taskOptions < 20) {
+        if (questionText.length >= 5 && taskTime > 0 && taskTime <= 99 && numOfOptions > 0 && numOfOptions < 20) {
             questions[i] = questionText;
             taskOptionsMas[i] = $(".question-textarea").attr("name");
             $(".question-textarea:first").remove();
@@ -57,7 +57,7 @@ $(document).on("submit", "#create-task", function () {
         tasktime: taskTime,
         taskoptionsmas : taskOptionsMas
     }, function (req) {
-        alert(req);
+        //alert(req);
         if (req === 'false')
             alert('ошибка при создании\nвозможно задание с этим именем уже существует');
         else
