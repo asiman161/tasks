@@ -9,12 +9,17 @@ var taskName = "";
 var timerTime = 0;
 var myTimer;
 
+/**
+ * создано что бы заменить функцию jQuery на свою т.к. с этим именем мне было удобнее
+ * */
 function myAppendTo(data, to) {
     $(data).appendTo(to);
 }
 
 $(document).ready(function () {
-
+    /**
+     * запускается, когда студент начинает отвечать на задачу
+     * */
     function timer() {
         timerTime--;
         if (timerTime < 0) {
@@ -28,9 +33,10 @@ $(document).ready(function () {
 
     }
 
+    /**
+     * список работ, которые студент может выполнить
+     * */
     $(document).on("click", "#section-right-top li", function () {
-    //$(document).on("click", "#section-right-top p", function () {
-
         numOfAnswers = 0;
         questionsId = [];
         taskId = $(this).attr("data-task-id");
@@ -43,21 +49,20 @@ $(document).ready(function () {
             return;
         }
         if (confirm("Для работы \"" + taskName + "\" отведено " + taskTime + " минут\nВаш вариант " + option + "\n" + "Вы готовы начать?")) {
-
+            //подтверждение, точно ли выбрана верная работа и готов ли студент её выполнить
             $.post("/php/taskspanel.php", {
                 getQuestions: taskId,
                 option: option
             }, function (req) {
                 $("#section-left").empty();
-                /*$("<div class='page-header'><h1><small id='timer-time'>Осталось:" + timerTime + " секунд" + "</small></h1></div>").appendTo("#section-left");
-                clearTimeout(myTimer);
-                timer();*/
-                if (req != "") {
+
+                if (req != "") { //пришедший реквест обрабатывается и из него создается форма, в которой студент будет отвечать
                     var json = $.parseJSON(req);
-                    //myAppendTo("<p>" + taskName + "</p>", "#section-left");
+
                     $("<div class='page-header'><h1 style='text-align: center;'>" + taskName + " <small id='timer-time'>Осталось:" + timerTime + " секунд" + "</small></h1></div>").appendTo("#section-left");
                     clearTimeout(myTimer);
                     timer();
+                    //тикающий таймер
                     myAppendTo("<form id='answer-task'></form>", "#section-left");
                     for (var i = 0; i < json.length; i++) {
                         numOfAnswers++;
@@ -67,30 +72,8 @@ $(document).ready(function () {
                     myAppendTo("<input style='margin:10px 0 10px 10px;' type='submit' class='btn btn-success' value='Oтправить ответ'/>", "#answer-task");
                 }
             });
-/*
-            $.post("/php/taskspanel.php", {
-                getQuestions: taskId,
-                option: option
-            }, function (req) {
-                $("#section-left").empty();
-                $("<p id='timer-time'>времени осталось: " + timerTime + " секунд" + "</p>").appendTo("#section-left");
-                clearTimeout(myTimer);
-                timer();
-                if (req != "") {
-                    var json = $.parseJSON(req);
-                    myAppendTo("<p>" + taskName + "</p>", "#section-left");
-                    myAppendTo("<form id='answer-task'></form>", "#section-left");
-                    for (var i = 0; i < json.length; i++) {
-                        numOfAnswers++;
-                        questionsId[i] = json[i].question_id;
-                        myAppendTo("<p>" + (i + 1) + ")вопрос - " + json[i].question_text + "</p>", "#answer-task");
-                        myAppendTo("<textarea class='answer-textarea'>", "#answer-task");
-                    }
-                    myAppendTo("<input type='submit' value='отправить ответ'/>", "#answer-task");
-                }
-            });
-*/
-            $.post("/php/answertask.php", {
+
+            $.post("/php/answertask.php", { //дополнительная проверка, если был выбран неверный вариант, то чистит секцию для ответа и отключает таймер
                 startanswertask: "",
                 taskid: taskId,
                 option: option
@@ -98,39 +81,35 @@ $(document).ready(function () {
                 //alert(req);
                 if (req === "false") {
                     alert("данная работа была уже начата(вы можете продолжить, если работа не была отправлена)");
+                    //предупреждает студента, что работа выполнялась(сообщает о том, что если пересоздать работу для того, что бы сбросить таймер - бессмыслено)
                 } else if (req === "wrong option") {
                     $("#section-left").empty();
                     clearTimeout(myTimer);
                     alert("такого варианта не существует")
                 }
             });
-        } else {
-            //alert("not ready")
         }
     });
 
-    $(document).on("submit", "#answer-task", function () {
+    $(document).on("submit", "#answer-task", function () {//отправляет работу, отключает таймер
         clearTimeout(myTimer);
         var answers = "";
         var answerText = "";
-        for (var i = 0; i < numOfAnswers; i++) {
+        for (var i = 0; i < numOfAnswers; i++) {//получает значение из первого элемента, после чего его удаляет, и так пока все не отчистит
             answerText = $(".answer-textarea").val().trim();
             if (answerText == "")
                 answerText = "пустой ответ";
             answers += answerText + "|";
             $(".answer-textarea:first").remove();
         }
-        //alert(option);
-        //alert(questionsId);
         $.post("/php/answertask.php", {
             answers: answers,
             questionid: questionsId,
             taskid: taskId,
             option: option
         }, function () {
-            //alert(taskId);
             $("#section-left").empty();
-            $("#get-completed-tasks").trigger("click");
+            $("#get-completed-tasks").trigger("click");//обновляет список выполненных работ
         });
 
         return false;

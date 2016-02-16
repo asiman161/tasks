@@ -11,6 +11,9 @@ function myAppendTo(data, to) {
     $(data).appendTo(to);
 }
 
+/**
+ * создает форму для проверки ответа студента
+ * */
 $(document).on("click", ".students-tasks", function () {
     rating = .0;
     numOfAnswers = 0;
@@ -19,11 +22,9 @@ $(document).on("click", ".students-tasks", function () {
     $("#section-left").empty();
     taskId = $(this).attr("data-task-id");
     studentId = $(this).attr("data-student-id");
-    //$("<p class='task'>" + $(this).text() + "</p>").appendTo("#section-left");
     var taskNameStudent = $(this).text();
     taskNameStudent = taskNameStudent.substr(3, taskNameStudent.lastIndexOf(" ")-2);
 
-    //$("<p class='task'>" + $(this).text() + "</p>").appendTo("#section-left");
     $.post("/php/checkanswer.php", {
         answers: "",
         taskid: taskId,
@@ -33,30 +34,19 @@ $(document).on("click", ".students-tasks", function () {
             var json = $.parseJSON(req);
             $("<div class='panel panel-success'> <div class='panel-heading'>" + taskNameStudent + "</div> <div class='panel-body'>Время выполнения : " + json[0].task_time + " секунд<br /><p id='show-rating'>" + "Оценка : " + rating + "</p></p><input class='form-control' style='width: 25%' type='text' id='set-rating-input' placeholder='Оценка'/></div></div>").appendTo("#section-left");
 
-            //myAppendTo("<p id='show-rating'>" + "оценка: " + rating + "</p>", "#section-left");
-            //myAppendTo("<input type='text' id='set-rating-input'/><br/>", "#section-left");
             myAppendTo("<div class='bs-callout bs-callout-info' id='container-answers-students'></div>", "#section-left");
             for (var i = 0; i < json.length; i++) {
                 questionsId[i] = json[i].question_id;
                 numOfAnswers++;
                 myAppendTo("<h4 style='margin: 2% 0 0 0'>" + (i + 1) + ") <b>Вопрос:</b> " + json[i].question_text + "</h4>", "#container-answers-students");
-                //myAppendTo("<p>" + (i + 1) + ") вопрос: " + json[i].question_text + "</p>", "#section-left");
                 myAppendTo("<h4 style='margin: 1% 0 1% 0'><b>   Ответ:</b> " + json[i].answer_text + "</h4>", "#container-answers-students");
-                //myAppendTo("<p>ответ: " + json[i].answer_text + "</p>", "#section-left");
                 myAppendTo("<textarea class='teacher-answer form-control' placeholder='описание ответа'/><br/>", "#container-answers-students");
-                //myAppendTo("<textarea class='teacher-answer' placeholder='описание ответа'/><br/>", "#section-left");
                 myAppendTo("<section class='buttons-rating'>" +
                     "<input type='button' class='button-rating btn btn-default' style='width: 6%;' value='1' data-click='false'/> " +
                     "<input type='button' class='button-rating btn btn-default' style='width: 6%;' value='0.7' data-click='false'/>" +
                     "<input type='button' class='button-rating btn btn-default' style='width: 6%;' value='0.3' data-click='false'/>" +
                     "<input type='button' class='button-rating btn btn-default' style='width: 6%;' value='0' data-click='false'/>" +
                     "</section>", "#container-answers-students");
-                /*myAppendTo("<section class='buttons-rating'>" +
-                    "<input type='button' class='button-rating' value='1' data-click='false'/> " +
-                    "<input type='button' class='button-rating' value='0.7' data-click='false'/>" +
-                    "<input type='button' class='button-rating' value='0.3' data-click='false'/>" +
-                    "<input type='button' class='button-rating' value='0' data-click='false'/>" +
-                    "</section>", "#section-left");*/
             }
             myAppendTo("<input type='button' id='set-rating' class='btn btn-success' style='margin: 2% 0 2% 2%;' value='ОТПРАВИТЬ'/>", "#section-left");
             myAppendTo("<input type='button' id='drop-rating' class='btn btn-danger' style='margin: 2% 0 2% 2%;' value='СБРОС'/>", "#section-left");
@@ -64,6 +54,9 @@ $(document).on("click", ".students-tasks", function () {
     });
 });
 
+/**
+ *  выставление оценки нажатием на одну из кнопок, при нажатии на одну из кнопок осталньые в группе с этой кнопку перестают работать, пока не произойдет сброс
+ * */
 $(document).on("click", ".button-rating", function () {
     if ($(this).attr("data-click") === 'false') {
         $(this).parent(".buttons-rating").children(".button-rating").attr("data-click", "true");
@@ -76,11 +69,19 @@ $(document).on("click", ".button-rating", function () {
     }
 });
 
+/**
+ * установка оченки через поле ввода
+ * */
 $(document).on("change", "#set-rating-input", function () {
     rating = parseFloat($("#set-rating-input").val());
     $("#show-rating").text("оценка: " + rating);
 });
 
+/**
+ * отправляет на сервер оцененную работу, если оценка выставлена через текстовое поле - кнопки игнорируются
+ * если текстовое поле пустое, то берется значение, установленное через кнопки, но если были нажаты не все,
+ * то вылетает алерт, сообщающий сколько было нажато кнопок из общего числа
+ * */
 $(document).on("click", "#set-rating", function () {
     if (counterButtonsClicks === numOfAnswers || rating === parseFloat($("#set-rating-input").val())) {
         rating.toFixed(1);
@@ -109,6 +110,10 @@ $(document).on("click", "#set-rating", function () {
     }
 });
 
+
+/**
+ * кнопка сброса, делает все кнопки для выставленния оценки активными
+ * */
 $(document).on("click", "#drop-rating", function () {
     rating = .0;
     counterButtonsClicks = 0;

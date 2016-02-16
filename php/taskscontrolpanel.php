@@ -26,7 +26,6 @@ if (isset($_POST['taskslist'])) {
 } else if (isset($_POST['alltasks'])) {
     $teacherId = $_SESSION['teacherId'];
     $query = "SELECT task_name, task_type, create_date FROM tasks WHERE teacher_id = '$teacherId' ORDER BY task_id DESC";
-    //$query = "SELECT task_name, task_type, create_date FROM tasks WHERE teacher_id = (SELECT teacher_id FROM teachers WHERE user_login = '" . $_SESSION['teacherLogin'] . "')";
     posts($mysqli, $query);
 } else if (isset($_POST['groupstasks'])) {
     //получаю все id заданий, который выполнялись указанной группой
@@ -35,10 +34,10 @@ if (isset($_POST['taskslist'])) {
     $array_tasks = array();
     $query = "";
     while ($data = mysqli_fetch_assoc($result)) {
-        //объединяю строки для получения запроса, в котором будет учавствовать сразу несколько тестов по разным id
+        //объединяю строки для получения запроса, в котором будет участвовать сразу несколько тестов по разным id
         $query .= "SELECT task_name, task_type, create_date FROM tasks WHERE task_id = '" . $data['task_id'] . "' UNION ";
     }
-    if (strlen($query) > 0) { //запрос может получиться пустым, если с указанной группой нет работ, что может привезти к ошибке
+    if (strlen($query) > 0) { //запрос может получиться пустым, если с указанной группой нет работ, что может привести к ошибке
         $query = substr($query, 0, strlen($query) - 6);
         posts($mysqli, $query);
     }
@@ -47,18 +46,15 @@ if (isset($_POST['taskname'])) {
     $taskname = $_SESSION['teacherPrefix'] . $_POST['taskname'];
     $teacherId = $_SESSION['teacherId'];
     $query = "SELECT task_name, task_type, create_date FROM tasks WHERE teacher_id = '$teacherId' AND task_name = '$taskname'";
-    //$query = "SELECT task_name, task_type, create_date FROM tasks WHERE teacher_id = (SELECT teacher_id FROM teachers WHERE user_login = '" . $_SESSION['teacherLogin'] . "') AND task_name = '$taskname'";
     posts($mysqli, $query);
 } else if (isset($_POST['year']) || isset($_POST['month']) || isset($_POST['day'])) {
     $date = $_POST['year'] . "-" . $_POST['month'] . "-" . $_POST['day'];
     $teacherId = $_SESSION['teacherId'];
     $query = "SELECT task_id,task_name, task_type, create_date FROM tasks WHERE teacher_id = '$teacherId' AND create_date = '$date' ORDER BY task_id DESC";
-    //$query = "SELECT task_name, task_type, create_date FROM tasks WHERE teacher_id = (SELECT teacher_id FROM teachers WHERE user_login = '" . $_SESSION['teacherLogin'] . "') AND create_date = '$date'";
     posts($mysqli, $query);
 
 } else if (isset($_POST['loadingpanel'])) {
     if (isset($_POST['loadinggroups'])) {
-        //$teacherLogin = $_SESSION['teacherLogin']; //TODO: удалить после проверка корректности вывода
         $teacherId = $_SESSION['teacherId'];
         $query = "SELECT group_id FROM groups_and_teachers WHERE teacher_id = '$teacherId'";
         $result = $mysqli->query($query);
@@ -73,7 +69,6 @@ if (isset($_POST['taskname'])) {
             posts($mysqli, $query);
         }
     } else if (isset($_POST['loadingteachers'])) {
-        //$studentLogin = $_SESSION['studentLogin']; //TODO: удалить после проверка корректности вывода
         $studentId = $_SESSION['studentId'];
         $query = "SELECT teacher_id FROM groups_and_teachers WHERE group_id = (SELECT group_id FROM students WHERE student_id = '$studentId');";
         $result = $mysqli->query($query);

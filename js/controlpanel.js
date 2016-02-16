@@ -1,4 +1,8 @@
 $(document).ready(function () {
+
+    /**
+     * устанавливает имена всех групп в выпадающем меню, которые принадлежат данному преподавателю
+     * */
     $.post("/php/taskscontrolpanel.php", {
         loadingpanel: "",
         loadinggroups : ""
@@ -9,6 +13,9 @@ $(document).ready(function () {
         }
     });
 
+    /**
+     * при клике на нужную работу выпадает список всех студентов, которые ВЫПОЛНИЛИ работу с данным именем
+     * */
     $(document).on("click", ".tasks-list", function () {
         var $el = $(this);
         var taskslist = $(this).text();
@@ -29,8 +36,9 @@ $(document).ready(function () {
         });
     });
 
-
-
+    /**
+     * меняет список работ по выбранной группе, отображает имена только тех работ, которые выполняла данная группа
+     * */
     $(document).on("change", "#select-groups", function () {
         var groupstasks = $(this).val();
         var taskName = "";
@@ -50,6 +58,9 @@ $(document).ready(function () {
         });
     });
 
+    /**
+     * отображает все работы текущего преподавателя
+     * */
     $(document).on("click", "#show-all-tasks", function () {
         var taskName = "";
         $.post("/php/taskscontrolpanel.php", {
@@ -67,6 +78,9 @@ $(document).ready(function () {
     });
     $("#show-all-tasks").trigger("click");
 
+    /**
+     * отображение работ по дате их создания
+     * */
     $(document).on("click", "#show-tasks-by-date", function () {
         var taskName = "";
         var year = $("#date-year").val();
@@ -88,6 +102,9 @@ $(document).ready(function () {
             });
     });
 
+    /**
+     * отображает работу по имени
+     * */
     $(document).on("click", "#show-task-by-name", function () {
         var taskName = "";
         var taskname = $("#task-name").val();
@@ -105,6 +122,9 @@ $(document).ready(function () {
             });
     });
 
+    /**
+     * выход
+     * */
     $(document).on("click", "#log-out", function(){
         $.post("/php/bd.php", {
             logout : ""
