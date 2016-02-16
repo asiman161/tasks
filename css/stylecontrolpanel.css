@@ -80,3 +80,8 @@ html {
 .bs-callout-info h4 {
     color:#3c5041;
 }
+
+#name-of-task{
+    margin:2% 0 2% 2%;
+    width: 50%;
+}

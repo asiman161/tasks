@@ -14,35 +14,34 @@
 
 </head>
 <body>
-<div class="navbar navbar-default navbar-static-top" role="navigation">
+<div class="navbar navbar-default navbar-static-top" role="navigation" >
     <div class="container">
         <div class="navbar-header">
-            <form class="navbar-form navbar-right" role="form">
-                <div class="form-group">
+            <form class="navbar-form navbar-right" role="form" >
+                <div class="form-group" style="width: 110%;">
                     <select id="select-groups" class="form-control">
                         <!--<option selected disabled>выбор преподавателя</option>-->
                     </select>
 
                     <input id="show-all-tasks" type="button" class="btn btn-success"
                            value="Показать все работы"/>
-                    <input id="show-tasks-by-date" type="button" class="btn btn-success"
-                           value="Отобразить работы по дате"/>
                     <input type="text" id="date-day" size="3" placeholder="день" maxlength="2"
                            class="form-control bfh-number">
                     <input type="text" id="date-month" size="3" placeholder="месяц" maxlength="2"
                            class="form-control bfh-number">
                     <input type="text" id="date-year" size="3" placeholder="год" maxlength="4"
                            class="form-control bfh-number">
+                    <input id="show-tasks-by-date" type="button" class="btn btn-success"
+                           value="Отобразить работы по дате"/>
+                    <input type="text" id="task-name" class="form-control" size="15"  placeholder="Название работы">
+                    <input id="show-task-by-name" type="button" class="btn btn-success"
+                           value="Отобразить работы по имени"/>
+                    <input id="log-out" type="button" class="btn btn-danger" value="Выйти"/>
 
                 </div>
             </form>
         </div>
-        <div class="navbar-collapse collapse">
-            <ul class="nav navbar-nav navbar-right">
-                <form class="navbar-form navbar-right" role="form">
-                    <input id="log-out" type="button" class="btn btn-danger" value="Выйти"/></form>
-            </ul>
-        </div><!--/.nav-collapse -->
+        <!--/.nav-collapse -->
     </div>
 </div>
 <div id="container">
@@ -80,18 +79,13 @@
     <div id="section-left" class="section-center">
         <div class="panel panel-primary">
             <div class="panel-heading"><b>FAQ:</b></div>
-            <div class="panel-body">В левой части отображается список доступных работ выбранного учителя, которые можно
-                выполнить, в них содержится
-                имя работы, тип работы, дата создания и время на её выполнение.<br>
-                Для смены учителя надо выбрать другого в выпадающем списке вверху слева.<br>
-                Что бы начать выполнение работы надо выбрать нужного учителя и вариант(вариант выбирается в центральном
-                поле
-                вверху) и после этого нажать на нужную работу слева.<br>
-                В правой части отображается список работ, которые вы уже выполняли.<br>
-                В списке выполненных работ отображается имя работы, дата создания учителем и оценка, на которую вы
-                выполнили
-                работу, если стоит "0" - работа еще не проверялась.<br>
-                Что бы увидеть описание работы выбирете нужную и нажмите на нее.<br></div>
+            <div class="panel-body">
+                Для того, что бы создать работу первоначально её следует настроить в левой части окна, указав количество
+                вопросов, вариантов и время на выполнение работы.<br/><br>
+                Для того, что бы увидеть работы, которые выполняла определенная группа следует выбрать её в выпадающем списке.<br><br>
+                Для того, что бы увидеть работы за нужное число или по имени введите в нужные поля сверху дату или название работы и нажмите соответствующую кнпоку<br><br>
+                Для того, что бы проверить работу следует в правой части нажать на нужную работу, а затем выбрать ту, которую следуюет првоерить<br><br>
+            </div>
         </div>
 
     </div>
@@ -99,7 +93,6 @@
         <div id="treeview1" class="treeview"><ul class="list-group"><section id="sectionRight"></section></ul></div>
     </div>
 </div>
-
 </body>
 </html>
 

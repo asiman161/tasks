@@ -21,16 +21,16 @@ function posts($mysqli, $query)
 
 if (isset($_POST['taskslist'])) {
     $taskslist = $_SESSION['teacherPrefix'] . $_POST['taskslist'];
-    $query = "SELECT students.student_id,tasks.task_id,task_name,f_name, l_name, rating FROM tasks,students, students_tasks WHERE students_tasks.task_id = (SELECT task_id FROM tasks WHERE task_name='$taskslist') AND students.student_id = students_tasks.student_id AND students_tasks.task_id = tasks.task_id";
+    $query = "SELECT students.student_id,tasks.task_id,task_name,f_name, l_name, rating FROM tasks,students, students_tasks WHERE students_tasks.task_id = (SELECT task_id FROM tasks WHERE task_name='$taskslist') AND students.student_id = students_tasks.student_id AND students_tasks.task_id = tasks.task_id ORDER BY rating DESC";
     posts($mysqli, $query);
 } else if (isset($_POST['alltasks'])) {
     $teacherId = $_SESSION['teacherId'];
-    $query = "SELECT task_name, task_type, create_date FROM tasks WHERE teacher_id = '$teacherId' ORDER BY task_id ASC";
+    $query = "SELECT task_name, task_type, create_date FROM tasks WHERE teacher_id = '$teacherId' ORDER BY task_id DESC";
     //$query = "SELECT task_name, task_type, create_date FROM tasks WHERE teacher_id = (SELECT teacher_id FROM teachers WHERE user_login = '" . $_SESSION['teacherLogin'] . "')";
     posts($mysqli, $query);
 } else if (isset($_POST['groupstasks'])) {
     //получаю все id заданий, который выполнялись указанной группой
-    $query = "SELECT task_id FROM groups_tasks WHERE group_id = (SELECT group_id FROM groups WHERE group_name ='" . $_POST['groupstasks'] . "')";
+    $query = "SELECT task_id FROM groups_tasks WHERE group_id = (SELECT group_id FROM groups WHERE group_name ='" . $_POST['groupstasks'] . "') ORDER BY task_id DESC";
     $result = $mysqli->query($query);
     $array_tasks = array();
     $query = "";
@@ -52,7 +52,7 @@ if (isset($_POST['taskname'])) {
 } else if (isset($_POST['year']) || isset($_POST['month']) || isset($_POST['day'])) {
     $date = $_POST['year'] . "-" . $_POST['month'] . "-" . $_POST['day'];
     $teacherId = $_SESSION['teacherId'];
-    $query = "SELECT task_name, task_type, create_date FROM tasks WHERE teacher_id = '$teacherId' AND create_date = '$date'";
+    $query = "SELECT task_id,task_name, task_type, create_date FROM tasks WHERE teacher_id = '$teacherId' AND create_date = '$date' ORDER BY task_id DESC";
     //$query = "SELECT task_name, task_type, create_date FROM tasks WHERE teacher_id = (SELECT teacher_id FROM teachers WHERE user_login = '" . $_SESSION['teacherLogin'] . "') AND create_date = '$date'";
     posts($mysqli, $query);
 

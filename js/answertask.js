@@ -62,7 +62,7 @@ $(document).ready(function () {
                     for (var i = 0; i < json.length; i++) {
                         numOfAnswers++;
                         questionsId[i] = json[i].question_id;
-                        myAppendTo(" <div class='bs-callout bs-callout-info'><h4>" + (i + 1) + ")Вопрос - " + json[i].question_text + "</h4>" + "<textarea class='answer-textarea form-control'/></div>", "#answer-task");
+                        myAppendTo(" <div class='bs-callout bs-callout-info'><h4>" + (i + 1) + ")Вопрос - " + json[i].question_text + "</h4><textarea class='answer-textarea form-control'/></div>", "#answer-task");
                     }
                     myAppendTo("<input style='margin:10px 0 10px 10px;' type='submit' class='btn btn-success' value='Oтправить ответ'/>", "#answer-task");
                 }

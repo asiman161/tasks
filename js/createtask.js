@@ -19,16 +19,19 @@ $(document).on("submit", "#make-control-task", function () {
     $("#section-left").empty();
     if (numOfQuestions > 0) {
         myAppendTo("<form id='create-task'>", "#section-left");
-        myAppendTo("<input type='text' id='name-of-task' pattern='.{5,115}' placeholder='название работы' required/>", "#section-left #create-task");
+        myAppendTo("<input type='text' id='name-of-task' class='form-control' pattern='.{5,115}' placeholder='название работы' required/>", "#create-task");
+        myAppendTo("<div id='create-task-container' class='bs-callout bs-callout-info'></div>", "#create-task");
         for (var i = 0; i < numOfOptions; i++) {
             if (i != 0)
-                myAppendTo("<p>---</p>", "#section-left #create-task");
+                myAppendTo("<p>---</p>", "#create-task-container");
             for (var j = 0; j < numOfQuestions; j++) {
-                myAppendTo("<p class='question-p'>" + (i + 1) + ")вариант " + (j + 1) + ")вопрос" + "</p>", "#section-left #create-task");
-                myAppendTo("<textarea class='question-textarea' name=" + "'" + (i + 1) + "'" + " placeholder='текст вопроса' required/>", "#section-left #create-task");
+                myAppendTo("<h4>" + (i + 1) + ")вариант " + (j + 1) + ")вопрос" + "</h4>" + "<textarea class='question-textarea form-control' name=" + "'" + (i + 1) + "'" + " placeholder='текст вопроса' required/>", "#create-task-container");
+                //myAppendTo("<p class='question-p'>" + (i + 1) + ")вариант " + (j + 1) + ")вопрос" + "</p>", "#create-task");
+                //myAppendTo("<textarea class='question-textarea form-control' name=" + "'" + (i + 1) + "'" + " placeholder='текст вопроса' required/>", "#create-task");
             }
         }
-        myAppendTo("<input type='submit' value='создать контрольную'/>", "#section-left #create-task");
+        //myAppendTo("<input type='submit' value='создать контрольную'/>", "#create-task-container");
+        $("#create-task-container").after("<input type='submit' class='btn btn-success' style='margin:2% 0 2% 2%;' value='создать контрольную'/>");
     }
 });
 
