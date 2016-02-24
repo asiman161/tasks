@@ -14,6 +14,11 @@ if (isset($_POST)) {
         $option = $_POST['option'];
         $taskId = $_POST['taskid'];
         $studentId = $_SESSION['studentId'];
+
+        $option = $mysqli->real_escape_string($option);
+        $taskId = $mysqli->real_escape_string($taskId);
+        $studentId = $mysqli->real_escape_string($studentId);
+
         $query = "SELECT DISTINCT question_option FROM questions WHERE question_option = '$option' AND task_id = '$taskId'";
         $result = $mysqli->query($query)->fetch_row();
         if($option == $result[0]){
@@ -35,6 +40,10 @@ if (isset($_POST)) {
     else if (isset($_POST['answers'])) {
         $taskId = $_POST['taskid'];
         $studentId = $_SESSION['studentId'];
+
+        $taskId = $mysqli->real_escape_string($taskId);
+        $studentId = $mysqli->real_escape_string($studentId);
+
         $query = "SELECT task_time FROM tasks_completed WHERE student_id = '$studentId' AND task_id = '$taskId'";
         $result = $mysqli->query($query)->fetch_row();
         if ($result[0] == "") {
@@ -42,6 +51,7 @@ if (isset($_POST)) {
             $answers = explode("|", $_POST['answers']);
             $questionId = $_POST['questionid'];
             $option = $_POST['option'];
+            $option = $mysqli->real_escape_string($option);
             $time = time();
 
             $query = "SELECT start_time FROM tasks_completed WHERE task_id = '$taskId' and student_id = '$studentId'";
@@ -52,6 +62,10 @@ if (isset($_POST)) {
             for ($i = 0; $i < count($questionId); $i++) {
                 $question = $questionId[$i];
                 $answer = $answers[$i];
+
+                $question = $mysqli->real_escape_string($question);
+                $answer = $mysqli->real_escape_string($answer);
+
                 $query = "INSERT INTO control_answers(question_id, task_id, task_option, student_id, answer_text) VALUES ('$question','$taskId' ,'$option' , '$studentId','$answer')";
                 $mysqli->query($query);
             }

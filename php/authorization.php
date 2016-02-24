@@ -12,6 +12,10 @@ if (isset($_POST['login']) && isset($_POST['password'])) {
     if($_POST['user'] == "teacher") {
         $login = $_POST['login'];
         $password = $_POST['password'];
+
+        $login = $mysqli->real_escape_string($login);
+        $password = $mysqli->real_escape_string($password);
+
         $query = "SELECT user_login FROM teachers WHERE user_login='$login' AND user_password='$password'";
         $login = $mysqli->query($query)->fetch_row();
         if ($login[0] == $_POST['login']) {
@@ -27,6 +31,10 @@ if (isset($_POST['login']) && isset($_POST['password'])) {
     } else {
         $login = $_POST['login'];
         $password = $_POST['password'];
+
+        $login = $mysqli->real_escape_string($login);
+        $password = $mysqli->real_escape_string($password);
+
         $query = "SELECT user_login FROM students WHERE user_login='$login' AND user_password='$password'";
         $login = $mysqli->query($query)->fetch_row();
         if($login[0] == $_POST['login']){

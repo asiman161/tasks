@@ -17,6 +17,12 @@ if (isset($_POST['questions'])) {
         $tasktype = $_POST['tasktype'];
         $tasktime = $_POST['tasktime'];
         $taskname = $_SESSION['teacherPrefix'] . $_POST['taskname'];
+
+        $teacherId = $mysqli->real_escape_string($teacherId);
+        $tasktype = $mysqli->real_escape_string($tasktype);
+        $tasktime = $mysqli->real_escape_string($tasktime);
+        $taskname = $mysqli->real_escape_string($taskname);
+
         $date = date('Y-m-d');
         $query = "INSERT INTO tasks(teacher_id, task_type, task_time, task_name, create_date) VALUES ('$teacherId', '$tasktype', '$tasktime', '$taskname', '$date')";
         $res = $mysqli->query($query);
@@ -26,6 +32,10 @@ if (isset($_POST['questions'])) {
             for ($i = 0; $i < count($questions); $i++) {
                 $option = $options[$i];
                 $question = $questions[$i];
+
+                $option = $mysqli->real_escape_string($option);
+                $question = $mysqli->real_escape_string($question);
+
                 $query = "INSERT INTO questions(task_id, question_option, question_text) VALUES ('$taskId[0]','$option' , '$question')";
                 $mysqli->query($query);
             }

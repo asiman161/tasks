@@ -17,6 +17,13 @@ if(isset($_POST)){
         $login = $_POST['login'];
         $password = $_POST['password'];
 
+        $lName = $mysqli->real_escape_string($lName);
+        $fName = $mysqli->real_escape_string($fName);
+        $fatherName = $mysqli->real_escape_string($fatherName);
+        $groupName = $mysqli->real_escape_string($groupName);
+        $login = $mysqli->real_escape_string($login);
+        $password = $mysqli->real_escape_string($password);
+
         $query = "SELECT group_id FROM groups WHERE group_name = '$groupName'";
         $result = $mysqli->query($query)->fetch_row();
         if($result[0] != "") {
