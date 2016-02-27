@@ -24,7 +24,6 @@ $(document).ready(function () {
         timerTime--;
         if (timerTime < 0) {
             $("#answer-task").trigger("submit");
-            alert('время кончилось, работа была отправлена');
         }
         else {
             $("#timer-time").text("Осталось: " + timerTime + " секунд");
@@ -102,13 +101,14 @@ $(document).ready(function () {
             answers += answerText + "|";
             $(".answer-textarea:first").remove();
         }
+        $("#section-left").empty();
         $.post("/php/answertask.php", {
             answers: answers,
             questionid: questionsId,
             taskid: taskId,
             option: option
         }, function () {
-            $("#section-left").empty();
+            alert("Работа была отправлена");
             $("#get-completed-tasks").trigger("click");//обновляет список выполненных работ
         });
 
