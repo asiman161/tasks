@@ -6,31 +6,89 @@
     <title>Title</title>
     <link href="../css/style.css" rel="stylesheet" type="text/css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-
+    <link href="css/stylecontrolpanel.css" rel="stylesheet" type="text/css">
+    <link href="css/style.css" rel="stylesheet" type="text/css">
+    <script src="js/controlpanel.js"></script>
+    <script src="js/createtask.js"></script>
+    <script src="js/checkanswers.js"></script>
 </head>
 <body>
 
-<a href="teacher.html">teacher name</a>
-<input type="button" id="log-out" value="выйти"/><br/>
-<button id="show-all-tasks">отобразить все работы</button>
+<section class="navbar-default">
+    <section class="container">
+        <center><form class="navbar-form">
+                <select id="select-groups" class="form-control"></select>
+                <input type="button" id="show-all-tasks" class="button button-success" value="отобразить все работы">
+                <input type="text" id="date-day" class="form-control" size="3" placeholder="День" maxlength="2">
+                <input type="text" id="date-month" class="form-control" size="3" placeholder="Месяц" maxlength="2">
+                <input type="text" id="date-year" class="form-control" size="3" placeholder="Год" maxlength="4">
+                <input type="button" id="show-tasks-by-date" class="button button-success"
+                       value="отобразить работы по дате">
+                <input type="text" id="task-name" class="form-control" placeholder="Название работы">
+                <input type="button" id="show-task-by-name" class="button button-success"
+                       value="отобразить по имени работы">
+                <input type="button" id="log-out" class="button button-danger" value="выйти"/>
+        </form></center>
+    </section>
+</section>
 
-<select id="select-groups">
-    <option selected disabled>выбор группы</option>
-</select>
-
-<button id="show-tasks-by-date">отобразить работы по дате</button>
-<input type="text" id="date-day" size="3" placeholder="день" maxlength="2">
-<input type="text" id="date-month" size="3" placeholder="месяц" maxlength="2">
-<input type="text" id="date-year" size="3" placeholder="год" maxlength="4">
-<button id="show-task-by-name">отобразить по имени работы</button>
-<input type="text" id="task-name" placeholder="name/date test"><br/>
-<button id="make-control-task">создать контрольную</button>
-<input type="number" id="num-of-questions" placeholder="кол-во вопросов">
-<input type="number" id="num-of-options" value="1" placeholder="кол-во вариантов">
-<input type="number" maxlength="2" id="time-of-questions" placeholder="время">
-<section id="content">
-    <section id="section-left"></section>
-    <section id="sectionRight"></section>
+<section id="container">
+    <section class="section-left">
+        <section class="alert-warning">
+            <form class="form-horizontal" style="padding:6px;" id="make-control-task" onsubmit="return false">
+                <section class="form-group">
+                    <label for="num-of-questions" class="control-label col-xs-2">Вопросы</label>
+                    <section class="col-xs-10">
+                        <input type="text" class="form-control" id="num-of-questions" pattern="[0-9]"
+                               placeholder="Количество">
+                    </section>
+                </section>
+                <section class="form-group">
+                    <label for="num-of-options" class="control-label col-xs-2">Варианты</label>
+                    <section class="col-xs-10">
+                        <input type="text" class="form-control" id="num-of-options" pattern="[0-9]"
+                               placeholder="Количество">
+                    </section>
+                </section>
+                <section class="form-group">
+                    <label for="time-of-questions" class="control-label col-xs-2">Время</label>
+                    <section class="col-xs-10">
+                        <input type="text" class="form-control" id="time-of-questions" pattern="[0-9]{1,3}"
+                               placeholder="В минутах">
+                    </section>
+                </section>
+                <section class="form-group">
+                    <section class="col-xs-offset-2 col-xs-10">
+                        <button type="submit" class="btn btn-success">Создать контрольную
+                        </button>
+                    </section>
+                </section>
+            </form>
+        </section>
+    </section>
+    <section id="section-left" class="section-center">
+        <section class="panel panel-primary">
+            <section class="panel-heading"><b>FAQ:</b></section>
+            <section class="panel-body">
+                Для того, что бы создать работу, то первоначально её следует настроить в левой части окна, указав
+                количество
+                вопросов, вариантов и время на выполнение работы.<br/><br>
+                Для того, что бы увидеть работы, которые выполняла определенная группа, следует выбрать её в выпадающем
+                списке.<br><br>
+                Для того, что бы увидеть работы за нужное число или по имени введите в нужные поля сверху дату или
+                название работы и нажмите соответствующую кнпоку.<br><br>
+                Для того, что бы проверить работу следует в правой части нажать на нужную задачу, а затем выбрать ту,
+                которую следует проверить.<br><br>
+            </section>
+        </section>
+    </section>
+    <section class="section-right">
+        <section id="treeview1" class="treeview">
+            <ul class="list-group">
+                <section id="sectionRight"></section>
+            </ul>
+        </section>
+    </section>
 </section>
 
 </body>

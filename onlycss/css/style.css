@@ -102,6 +102,11 @@ html, body {
     -moz-user-select: none;
     -ms-user-select: none;
 }
+.button-success {
+    color:#fff;
+    background-color:#5cb85c;
+    border-color:#4cae4c
+}
 
 .button-login {
     background-color: #59B2E0;
@@ -109,7 +114,59 @@ html, body {
     width: 50%;
     margin: 0 25%;
 }
+.button-danger {
+    color:#fff;
+    background-color:#d9534f;
+    border-color:#d43f3a
+}
 
-.button:hover{
+.button-login:hover{
     background-color: #569ac6;
+}
+.button-success:hover{
+    background-color: #47a447;
+}
+.button-danger:hover{
+    color:#fff;
+    background-color:#d2322d;
+    border-color:#ac2925
+}
+
+.form-control {
+    display:block;
+    width:100%;
+    height:34px;
+    padding:6px 12px;
+    font-size:14px;
+    line-height:1.42857143;
+    color:#555;
+    background-color:#fff;
+    background-image:none;
+    border:1px solid #ccc;
+    border-radius:4px;
+    -webkit-box-shadow:inset 0 1px 1px rgba(0,0,0,.075);
+    box-shadow:inset 0 1px 1px rgba(0,0,0,.075);
+    -webkit-transition:border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+    transition:border-color ease-in-out .15s,box-shadow ease-in-out .15s
+}
+
+.navbar-form{
+    padding: 0.5%;
+}
+.test{
+    margin: 0 0 0 5%;
+}
+
+.navbar-form .form-control {
+    display:inline-block;
+    width:auto;
+    height: auto;
+    vertical-align:middle
+}
+
+.form-control:focus {
+    border-color:#66afe9;
+    outline:0;
+    -webkit-box-shadow:inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(102,175,233,.6);
+    box-shadow:inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(102,175,233,.6)
 }
