@@ -11,7 +11,7 @@
 .section-right {
     background: #7eff61;
 }*/
-html {
+html, body {
     background-color:#DBDBDB;
 }
 #container{

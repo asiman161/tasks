@@ -46,7 +46,7 @@ $(document).on("submit", "#create-task", function () {
     taskname = taskname.replace(new RegExp("\\|", 'g'), "");
         for (var i = 0; i < numOfQuestions * numOfOptions; i++) {
             questionText = $(".question-textarea").val();
-            if (questionText.length >= 5 && taskTime > 0 && taskTime <= 99 && numOfOptions > 0 && numOfOptions < 20) {
+            if (taskTime > 0 && taskTime <= 99 && numOfOptions > 0 && numOfOptions < 20) {
                 questions[i] = questionText;
                 taskOptionsMas[i] = $(".question-textarea").attr("name");
                 $(".question-textarea:first").remove();

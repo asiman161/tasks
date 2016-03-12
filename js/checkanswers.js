@@ -19,7 +19,6 @@ $(document).on("click", ".students-tasks", function () {
     numOfAnswers = 0;
     counterButtonsClicks = 0;
     questionsId = [];
-    $("#section-left").empty();
     taskId = $(this).attr("data-task-id");
     studentId = $(this).attr("data-student-id");
     var taskNameStudent = $(this).text();
@@ -30,6 +29,7 @@ $(document).on("click", ".students-tasks", function () {
         taskid: taskId,
         studentid: studentId
     }, function (req) {
+        $("#section-left").empty();
         if (req != "") {
             var json = $.parseJSON(req);
             $("<div class='panel panel-success'> <div class='panel-heading'>" + taskNameStudent + "</div> <div class='panel-body'>Время выполнения : " + json[0].task_time + " секунд<br /><p id='show-rating'>" + "Оценка : " + rating + "</p></p><input class='form-control' style='width: 25%' type='text' id='set-rating-input' placeholder='Оценка'/></div></div>").appendTo("#section-left");
