@@ -6,34 +6,7 @@
     <script src="js/angular.min.js"></script>
     <script src="js/angular-post-fix.js"></script>
     <script>
-        /*$(document).ready(function(){
-         $(document).on("submit", "#sign", function(){
-         var fName = $("#f-name").val();
-         var lName = $("#l-name").val();
-         var fatherName = $("#father-name").val();
-         var groupName = $("#group-name").val();
-         var login = $("#user-login").val();
-         var password = $("#user-password").val();
-         $.post("/php/registration.php", {
-         registration : "",
-         fname : fName,
-         lname : lName,
-         fathername : fatherName,
-         groupname : groupName,
-         login : login,
-         password : password
-         }, function(req){
-         //alert(req);
-         if(req == 'true') {
-         alert("вы зарегистрированы");
-         window.location.href = "/index.html";
-         } else {
-         alert(req);
-         }
-         });
-         return false;
-         })
-         });*/
+        'use strict';
 
         var app = angular.module('app', ['httpPostFix']);
 

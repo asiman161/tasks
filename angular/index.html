@@ -7,23 +7,7 @@
     <script src="js/angular.min.js"></script>
     <script src="js/angular-post-fix.js"></script>
     <script>
-        /*$(document).on("submit", "#student-auth", function(){
-         var login = $("[name='login']").val();
-         var password = $("[name='password']").val();
-         $.post("php/authorization.php", {
-         user : "student",
-         login: login,
-         password: password
-         }, function (req) {
-         if (req == "true")
-         window.location.href = "/panel.html";
-         else {
-         alert(req);
-         }
-         });
-         return false;
-         });*/
-
+        'use strict';
         var app = angular.module('app', ['httpPostFix']);
 
         app.controller('mainCtrl', function ($scope, $http) {
@@ -47,6 +31,7 @@
             };
         });
     </script>
+
 </head>
 <body ng-app="app">
 

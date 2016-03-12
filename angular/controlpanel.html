@@ -4,33 +4,101 @@
     <meta charset="UTF-8">
     <meta http-equiv="Cache-Control" content="private">
     <title>Title</title>
-    <link href="../css/style.css" rel="stylesheet" type="text/css">
+    <script src="js/angular.min.js"></script>
+    <script src="js/angular-post-fix.js"></script>
+    <script src="js/min/controlpanel.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <link href="../css/panel.bootstrap.min.css" rel="stylesheet">
+    <link href="../css/stylecontrolpanel.css" rel="stylesheet" type="text/css">
 
 </head>
-<body>
+<body ng-app="app">
 
-<a href="teacher.html">teacher name</a>
-<input type="button" id="log-out" value="выйти"/><br/>
-<button id="show-all-tasks">отобразить все работы</button>
 
-<select id="select-groups">
-    <option selected disabled>выбор группы</option>
-</select>
+<section id="container">
+    <section id="section-ctrl-right" data-ng-controller="controllerRight as ctrl_r">
+    <div class="navbar navbar-default navbar-static-top" role="navigation" >
+        <div class="container">
+            <div class="navbar-header">
+                <form class="navbar-form navbar-right" role="form" >
+                    <div class="form-group" style="width: 110%;">
+                        <select id="select-groups" class="form-control">
+                        </select>
+                        <input  data-ng-click="ctrl_r.test()" id="show-all-tasks" type="button" class="btn btn-success"
+                               value="Показать все работы"/>
+                        <input type="text" id="date-day" size="3" placeholder="день" maxlength="2"
+                               class="form-control bfh-number">
+                        <input type="text" id="date-month" size="3" placeholder="месяц" maxlength="2"
+                               class="form-control bfh-number">
+                        <input type="text" id="date-year" size="3" placeholder="год" maxlength="4"
+                               class="form-control bfh-number">
+                        <input id="show-tasks-by-date" type="button" class="btn btn-success"
+                               value="Отобразить работы по дате"/>
+                        <input type="text" id="task-name" class="form-control" size="15"  placeholder="Название работы">
+                        <input id="show-task-by-name" type="button" class="btn btn-success"
+                               value="Отобразить работы по имени"/>
+                        <input id="log-out" type="button" class="btn btn-danger" value="Выйти"/>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <section id="section-right" class="section-right">
+        <my-dir-right></my-dir-right>
+    </section>
+    </section>
+    <section id="section-left" class="section-left">
+        <div class="alert-warning">
+            <form class="form-horizontal" style="padding:6px;" id="make-control-task" onsubmit="return false">
+                <div class="form-group">
+                    <label for="num-of-questions" class="control-label col-xs-2">Вопросы</label>
+                    <div class="col-xs-10">
+                        <input type="text" class="form-control" id="num-of-questions" pattern="[0-9]"
+                               placeholder="Количество">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="num-of-options" class="control-label col-xs-2">Варианты</label>
+                    <div class="col-xs-10">
+                        <input type="text" class="form-control" id="num-of-options" pattern="[0-9]"
+                               placeholder="Количество">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="time-of-questions" class="control-label col-xs-2">Время</label>
+                    <div class="col-xs-10">
+                        <input type="text" class="form-control" id="time-of-questions" pattern="[0-9]{1,3}"
+                               placeholder="В минутах">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-xs-offset-2 col-xs-10">
+                        <button type="submit" class="btn btn-success">Создать контрольную
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </section>
 
-<button id="show-tasks-by-date">отобразить работы по дате</button>
-<input type="text" id="date-day" size="3" placeholder="день" maxlength="2">
-<input type="text" id="date-month" size="3" placeholder="месяц" maxlength="2">
-<input type="text" id="date-year" size="3" placeholder="год" maxlength="4">
-<button id="show-task-by-name">отобразить по имени работы</button>
-<input type="text" id="task-name" placeholder="name/date test"><br/>
-<button id="make-control-task">создать контрольную</button>
-<input type="number" id="num-of-questions" placeholder="кол-во вопросов">
-<input type="number" id="num-of-options" value="1" placeholder="кол-во вариантов">
-<input type="number" maxlength="2" id="time-of-questions" placeholder="время">
-<section id="content">
-    <section id="section-left"></section>
-    <section id="sectionRight"></section>
+    <section id="section-center" class="section-center">
+        <div class="panel panel-primary">
+            <div class="panel-heading"><b>FAQ:</b></div>
+            <div class="panel-body">
+                Для того, что бы создать работу, то первоначально её следует настроить в левой части окна, указав
+                количество
+                вопросов, вариантов и время на выполнение работы.<br/><br>
+                Для того, что бы увидеть работы, которые выполняла определенная группа, следует выбрать её в выпадающем
+                списке.<br><br>
+                Для того, что бы увидеть работы за нужное число или по имени введите в нужные поля сверху дату или
+                название работы и нажмите соответствующую кнпоку.<br><br>
+                Для того, что бы проверить работу следует в правой части нажать на нужную задачу, а затем выбрать ту,
+                которую следует проверить.<br><br>
+            </div>
+        </div>
+    </section>
+
+
 </section>
 
 </body>
