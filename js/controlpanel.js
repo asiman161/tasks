@@ -51,7 +51,7 @@ $(document).ready(function () {
                 for (var i = 0; i < json.length; i++) {
                     taskName = json[i].task_name;
                     taskName = taskName.substr(5);
-                    $("<li class='list-group-item node-treeview1 tasks-list'>" + taskName + " | " + json[i].task_type + " | " + json[i].create_date + "</li>").appendTo("#sectionRight");
+                    $("<li class='list-group-item tasks-list'>" + taskName + " | " + json[i].task_type + " | " + json[i].create_date + "</li>").appendTo("#sectionRight");
                     //заменил p на li и вставил классы: list-group-item node-treeview1
                 }
             }
@@ -71,7 +71,7 @@ $(document).ready(function () {
             for (var i = 0; i < json.length; i++) {
                 taskName = json[i].task_name;
                 taskName = taskName.substr(5);
-                $("<li class='list-group-item node-treeview1 tasks-list'>" + taskName + " | " + json[i].task_type + " | " + json[i].create_date + "</li>").appendTo("#sectionRight");
+                $("<li class='list-group-item tasks-list'>" + taskName + " | " + json[i].task_type + " | " + json[i].create_date + "</li>").appendTo("#sectionRight");
                 //$("<p class='tasks-list'>" + taskName + "|" + json[i].task_type + "|" + json[i].create_date + "</p>").appendTo("#sectionRight");
             }
         });

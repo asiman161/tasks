@@ -32,24 +32,24 @@ $(document).on("click", ".students-tasks", function () {
     }, function (req) {
         if (req != "") {
             var json = $.parseJSON(req);
-            $("<div class='panel panel-success'> <div class='panel-heading'>" + taskNameStudent + "</div> <div class='panel-body'>Время выполнения : " + json[0].task_time + " секунд<br /><p id='show-rating'>" + "Оценка : " + rating + "</p></p><input class='form-control' style='width: 25%' type='text' id='set-rating-input' placeholder='Оценка'/></div></div>").appendTo("#section-left");
+            $("<section class='panel panel-success'> <section class='panel-heading'>" + taskNameStudent + "</section> <section class='panel-body'>Время выполнения : " + json[0].task_time + " секунд<br /><p id='show-rating'>" + "Оценка : " + rating + "</p></p><input class='form-control' style='width: 25%' type='text' id='set-rating-input' placeholder='Оценка'/></section></section>").appendTo("#section-left");
 
-            myAppendTo("<div class='bs-callout bs-callout-info' id='container-answers-students'></div>", "#section-left");
+            myAppendTo("<section class='bs-callout bs-callout-info' id='container-answers-students'></section>", "#section-left");
             for (var i = 0; i < json.length; i++) {
                 questionsId[i] = json[i].question_id;
                 numOfAnswers++;
-                myAppendTo("<h4 style='margin: 2% 0 0 0'>" + (i + 1) + ") <b>Вопрос:</b> " + json[i].question_text + "</h4>", "#container-answers-students");
-                myAppendTo("<h4 style='margin: 1% 0 1% 0'><b>   Ответ:</b> " + json[i].answer_text + "</h4>", "#container-answers-students");
-                myAppendTo("<textarea class='teacher-answer form-control' placeholder='описание ответа'/><br/>", "#container-answers-students");
+                myAppendTo("<h4 style='margin: 2% 0 0 0'>" + (i + 1) + ") <b>Вопрос:</b> <span style='font-weight: normal'>" + json[i].question_text + "</span></h4>", "#container-answers-students");
+                myAppendTo("<h4 style='margin: 1% 0 1% 0'><b>Ответ:</b><span style='font-weight: normal'> " + json[i].answer_text + "</span></h4>", "#container-answers-students");
+                myAppendTo("<textarea class='teacher-answer form-control' style='width: 97%' placeholder='описание ответа'/><br/>", "#container-answers-students");
                 myAppendTo("<section class='buttons-rating'>" +
-                    "<input type='button' class='button-rating btn btn-default' style='width: 6%;' value='1' data-click='false'/> " +
-                    "<input type='button' class='button-rating btn btn-default' style='width: 6%;' value='0.7' data-click='false'/>" +
-                    "<input type='button' class='button-rating btn btn-default' style='width: 6%;' value='0.3' data-click='false'/>" +
-                    "<input type='button' class='button-rating btn btn-default' style='width: 6%;' value='0' data-click='false'/>" +
+                    "<input type='button' class='button-rating button button-default' style='width: 6%;' value='1' data-click='false'/> " +
+                    "<input type='button' class='button-rating button button-default' style='width: 6%;' value='0.7' data-click='false'/>" +
+                    "<input type='button' class='button-rating button button-default' style='width: 6%;' value='0.3' data-click='false'/>" +
+                    "<input type='button' class='button-rating button button-default' style='width: 6%;' value='0' data-click='false'/>" +
                     "</section>", "#container-answers-students");
             }
-            myAppendTo("<input type='button' id='set-rating' class='btn btn-success' style='margin: 2% 0 2% 2%;' value='ОТПРАВИТЬ'/>", "#section-left");
-            myAppendTo("<input type='button' id='drop-rating' class='btn btn-danger' style='margin: 2% 0 2% 2%;' value='СБРОС'/>", "#section-left");
+            myAppendTo("<input type='button' id='set-rating' class='button button-success' style='margin: 2% 0 2% 2%;' value='ОТПРАВИТЬ'/>", "#section-left");
+            myAppendTo("<input type='button' id='drop-rating' class='button button-danger' style='margin: 2% 0 2% 2%;' value='СБРОС'/>", "#section-left");
         }
     });
 });

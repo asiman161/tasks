@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta http-equiv="Cache-Control" content="private">
     <title>Title</title>
-    <link href="../css/style.css" rel="stylesheet" type="text/css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
     <link href="css/stylecontrolpanel.css" rel="stylesheet" type="text/css">
     <link href="css/style.css" rel="stylesheet" type="text/css">
@@ -34,32 +33,32 @@
 
 <section id="container">
     <section class="section-left">
-        <section class="alert-warning">
+        <section class="yellow-sec-left">
             <form class="form-horizontal" style="padding:6px;" id="make-control-task" onsubmit="return false">
-                <section class="form-group">
-                    <label for="num-of-questions" class="control-label col-xs-2">Вопросы</label>
-                    <section class="col-xs-10">
+                <section class="form-group" style="padding: 1%">
+                    <label for="num-of-questions"><b>Вопросы:</b></label>
+                    <section class="width90">
                         <input type="text" class="form-control" id="num-of-questions" pattern="[0-9]"
                                placeholder="Количество">
                     </section>
                 </section>
-                <section class="form-group">
-                    <label for="num-of-options" class="control-label col-xs-2">Варианты</label>
-                    <section class="col-xs-10">
+                <section class="form-group" style="padding: 1%">
+                    <label for="num-of-options"><b>Варианты:</b></label>
+                    <section class="width90">
                         <input type="text" class="form-control" id="num-of-options" pattern="[0-9]"
                                placeholder="Количество">
                     </section>
                 </section>
-                <section class="form-group">
-                    <label for="time-of-questions" class="control-label col-xs-2">Время</label>
-                    <section class="col-xs-10">
+                <section class="form-group" style="padding: 1%">
+                    <label for="time-of-questions"><b>Время:</b></label>
+                    <section class="width90">
                         <input type="text" class="form-control" id="time-of-questions" pattern="[0-9]{1,3}"
                                placeholder="В минутах">
                     </section>
                 </section>
                 <section class="form-group">
-                    <section class="col-xs-offset-2 col-xs-10">
-                        <button type="submit" class="btn btn-success">Создать контрольную
+                    <section>
+                        <button type="submit" class="button button-success" style="margin:3% 0 5% 2%">Создать контрольную
                         </button>
                     </section>
                 </section>
@@ -82,7 +81,7 @@
             </section>
         </section>
     </section>
-    <section class="section-right">
+    <section class="section-right" style="width: 25%;">
         <section id="treeview1" class="treeview">
             <ul class="list-group">
                 <section id="sectionRight"></section>
