@@ -58,7 +58,7 @@ $(document).ready(function () {
                 if (req != "") { //пришедший реквест обрабатывается и из него создается форма, в которой студент будет отвечать
                     var json = $.parseJSON(req);
 
-                    $("<div class='page-header'><h1 style='text-align: center;'>" + taskName + " <small id='timer-time'>Осталось:" + timerTime + " секунд" + "</small></h1></div>").appendTo("#section-left");
+                    $("<div style='text-align: center;font-size: 25px'><h1>" + taskName + "</h1><small id='timer-time'>Осталось:" + timerTime + " секунд" + "</small></div>").appendTo("#section-left");
                     clearTimeout(myTimer);
                     timer();
                     //тикающий таймер
@@ -66,9 +66,9 @@ $(document).ready(function () {
                     for (var i = 0; i < json.length; i++) {
                         numOfAnswers++;
                         questionsId[i] = json[i].question_id;
-                        myAppendTo(" <div class='bs-callout bs-callout-info'><h4>" + (i + 1) + ")Вопрос - " + json[i].question_text + "</h4><textarea class='answer-textarea form-control'/></div>", "#answer-task");
+                        myAppendTo(" <div class='bs-callout bs-callout-info'><h4>" + (i + 1) + ")Вопрос - " + json[i].question_text + "</h4><textarea class='answer-textarea form-control' style='width: 97%'/></div>", "#answer-task");
                     }
-                    myAppendTo("<input style='margin:10px 0 10px 10px;' type='submit' class='btn btn-success' value='Oтправить ответ'/>", "#answer-task");
+                    myAppendTo("<input style='margin:10px 0 10px 10px;' type='submit' class='button button-success' value='Oтправить ответ'/>", "#answer-task");
                 }
             });
 

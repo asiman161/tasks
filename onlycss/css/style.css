@@ -20,6 +20,41 @@ html, body {
     padding-bottom: 1%;
 }
 
+#container {
+    width: 100%;
+    height: 700px;
+    border-top: 1px solid #ACACAC;
+}
+
+.section-left {
+    background: #DBDBDB;
+    width: 25%;
+    float: left;
+    min-height: 100%;
+}
+
+.section-center {
+    background: #EEEEEE;
+    width: 49.5%;
+    min-height: 100%;
+    float: left;
+    border-right: 1px solid #ACACAC;
+    border-left: 1px solid #ACACAC;
+    border-bottom: 1px solid #ACACAC;
+}
+
+.section-right {
+    background: #DBDBDB;
+    width: 25%;
+    min-height: 100%;
+    float: left;
+}
+
+.navbar-default {
+    background-color: #f8f8f8;
+    border-color: #e7e7e7
+}
+
 .form-content{
     padding: 1% 2%;
 }
@@ -115,6 +150,7 @@ html, body {
     width: 50%;
     margin: 0 25%;
 }
+
 .button-danger {
     color:#fff;
     background-color:#d9534f;
@@ -164,6 +200,7 @@ html, body {
 }
 
 .navbar-form{
+
     padding: 0.5%;
 }
 .test{
@@ -223,12 +260,25 @@ html, body {
 .panel-body {
     padding:15px
 }
+
 .panel-success {
     border-color:#d6e9c6
 }
+
+.panel-warning {
+    border-color:#faebcc
+}
+
 .panel-success>.panel-heading {
     padding: 10px;
     color:#3c763d;
     background-color:#dff0d8;
     border-color:#d6e9c6
 }
+
+.panel-warning>.panel-heading {
+    color:#8a6d3b;
+    background-color:#fcf8e3;
+    border-color:#faebcc
+}
+

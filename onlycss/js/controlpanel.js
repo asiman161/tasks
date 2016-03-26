@@ -5,7 +5,7 @@ $(document).ready(function () {
      * */
     $.post("/php/taskscontrolpanel.php", {
         loadingpanel: "",
-        loadinggroups : ""
+        loadinggroups: ""
     }, function (req) {
         var json = $.parseJSON(req);
         for (var i = 0; i < json.length; i++) {
@@ -122,17 +122,34 @@ $(document).ready(function () {
             });
     });
 
+    $(document).on('submit', '#change-password', function () {
+        var password = $('#password').val();
+        var password2 = $('#password2').val();
+        if(password !== password2 || password == ''){
+            alert('Пароли не совпадают');
+        } else {
+            $('#btn-change-password').attr('disabled', true);
+            $.post('/php/taskscontrolpanel.php', {
+                changePassword:'',
+                password:password
+            }, function(req){
+                $('#btn-change-password').attr('disabled', false);
+                alert(req);
+            });
+        }
+    });
+
     /**
      * выход
      * */
-    $(document).on("click", "#log-out", function(){
+    $(document).on("click", "#log-out", function () {
         $.post("/php/bd.php", {
-            logout : ""
-        }, function(req){
-            if(req === "true"){
-                window.location.href = "/teacher.html";
+            logout: ""
+        }, function (req) {
+            if (req === "true") {
+                window.location.href = "/onlycss/teacher.html";
             }
-        }) ;
+        });
     });
 });
 

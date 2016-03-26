@@ -64,6 +64,29 @@
                 </section>
             </form>
         </section>
+        <section class="yellow-sec-left" style="margin-top: 5%;">
+            <form class="form-horizontal" style="padding:6px;" id="change-password" onsubmit="return false">
+                <section class="form-group" style="padding: 1%">
+                    <label for="num-of-options"><b>Новый пароль:</b></label>
+                    <section class="width90">
+                        <input type="password" class="form-control" id="password" pattern="[A-Za-zА-Яа-яЁё0-9\D]{3,24}"
+                               placeholder="Пароль">
+                    </section>
+                </section>
+                <section class="form-group" style="padding: 1%">
+                    <label for="time-of-questions"><b>Повторите пароль:</b></label>
+                    <section class="width90">
+                        <input type="password" class="form-control" id="password2" pattern="[A-Za-zА-Яа-яЁё0-9\D]{3,24}"
+                               placeholder="Пароль">
+                    </section>
+                </section>
+                <section class="form-group">
+                    <section>
+                        <button type="submit" class="button button-success" id="btn-change-password" style="margin:3% 0 5% 2%">Сменить пароль</button>
+                    </section>
+                </section>
+            </form>
+        </section>
     </section>
     <section id="section-left" class="section-center">
         <section class="panel panel-primary">

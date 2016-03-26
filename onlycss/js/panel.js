@@ -66,7 +66,7 @@ $(document).ready(function () {
                     taskName = json[i].task_name;
                     taskName = taskName.substr(5);
 
-                    $("<li class='list-group-item completed-tasks-list'><span class='badge '>" + json[i].rating + "</span>" + taskName + "<small class='pull-right' style='margin-right:5%'>" + json[i].create_date + "</small></li>").appendTo("#section-right-bottom").attr({
+                    $("<li class='list-group-item completed-tasks-list'><span class='badge'>" + json[i].rating + "</span>" + taskName + "<small class='pull-right' style='margin-right:5%'>" + json[i].create_date + "</small></li>").appendTo("#section-right-bottom").attr({
                         "data-task-id": json[i].task_id,
                         "data-task-time": json[i].task_time,
                         "data-task-name": taskName

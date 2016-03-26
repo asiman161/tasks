@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src="js/adminpanel.js"></script>
+</head>
+<body>
+<input type="button" value="Выход" id="log-out">
+<input type="button" value="Обновить" id="update">
+<p>создание преподавателя</p>
+<form id="create-teacher">
+    <input type="text" id="l-name" placeholder="Фамилия" pattern="[А-Яа-я]{2,24}" required>
+    <input type="text" id="f-name" placeholder="Имя" pattern="[А-Яа-я]{2,24}" required>
+    <input type="text" id="father-name" placeholder="Отчество" pattern="[А-Яа-я]{2,24}" required><br><br>
+    <input type="text" id="teacher-login" placeholder="логин преподавателя" pattern="[A-Za-zА-Яа-яЁё0-9]{3,24}" required>
+    <input type="password" id="teacher-password" placeholder="пароль преподавателя" pattern="[A-Za-zА-Яа-яЁё0-9\D]{3,24}" required>
+    <input type="password" id="teacher-password2" placeholder="пароль преподавателя 2" pattern="[A-Za-zА-Яа-яЁё0-9\D]{3,24}" required><br><br>
+    <input type="submit" value="создать преподавателя" id="input-submit-create-teacher">
+</form>
+
+<p>создание группы</p>
+<form id="create-group">
+    <input type="text" placeholder="имя группы" id="group-name" required>
+    <input type="submit" id="input-submit-create-group" value="создать группу">
+</form>
+
+<p>создание/удаление преподавателя или группы</p>
+<form>
+    <input type="button" id="show-teacher-groups" value="показать группы преподавателя">
+    <input type="button" id="btn-add-group" value="привязать группу">
+    <input type="button" id="btn-remove-teacher-group" value="отвязать группу"><br><br>
+    <input type="button" id="btn-remove-teacher" value="удалить выбранного преподавателя">
+    <input type="button" id="btn-remove-group" value="удалить выбранную группу"><br><br>
+    <select id="select-teacher-name"></select>
+    <select id="select-group-name"></select>
+</form>
+<div style="margin-left: 35%;float: left;" id="groups"></div>
+</body>
+</html>

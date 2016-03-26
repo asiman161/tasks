@@ -55,43 +55,8 @@ html, body {
     color: #3c5041;
 }
 
-#name-of-task {
-    margin: 2% 0 2% 2%;
-    width: 50%;
-}
-
-/*   //////////////   body   //////////////   */
-
-.container {
-    margin-right: auto;
-    margin-left: auto;
-    padding-left: 15px;
-    padding-right: 15px
-}
-
-#create-task-container {
-    width: 90%;
-}
-
-.yellow-sec-left {
-    background-color: #fcf8e3;
-    border-color: #faebcc;
-    color: #8a6d3b
-}
-
-.tasks-list:hover {
-    background-color: #939393;
-    color: #fff;
-}
-
-#tasks-list-background {
-    background-color: #FCF8E3;
-    border-bottom: 1px solid #fff;
-
-}
-
-#tasks-list-background:hover {
-    background-color: #fbfcb4;
+.navbar-form {
+    margin-left: 17.5%;
 }
 
 .badge {
@@ -114,6 +79,17 @@ html, body {
     color: #939393;
 }
 
-.students-tasks > .badge {
+.list-group-item > .badge {
     float: right
 }
+
+.completed-tasks-list:hover {
+    background-color: #939393;
+    color: #fff;
+}
+
+.tasks-list:hover {
+    background-color: #939393;
+    color: #fff;
+}
+

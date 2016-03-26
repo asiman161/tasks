@@ -108,7 +108,16 @@ if (isset($_POST['taskname'])) {
         }
     }
 
-}
+} else if (isset($_POST['changePassword'])) {
+    $password = $mysqli->real_escape_string($_POST['password']);
+    $login = $_SESSION['teacherLogin'];
+    if ($mysqli->query("UPDATE teachers SET user_password = '$password' WHERE user_login ='$login'")) {
+        echo "Пароль сменен";
+    } else {
+        echo "Произошла ошибка при смене пароля, повторите попытку";
+    }
+
+};
 
 
 
