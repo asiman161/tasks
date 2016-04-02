@@ -22,6 +22,12 @@ $(document).on("click", ".students-tasks", function () {
     $("#section-left").empty();
     taskId = $(this).attr("data-task-id");
     studentId = $(this).attr("data-student-id");
+
+    /////////////////////////////////////////////////
+    $('.change-badge').removeClass('change-badge');
+    $(this).addClass('change-badge');
+    //////////////////////////////////////////////////
+
     var taskNameStudent = $(this).text();
     taskNameStudent = taskNameStudent.substr(3, taskNameStudent.lastIndexOf(" ")-2);
 
@@ -94,6 +100,7 @@ $(document).on("click", "#set-rating", function () {
             $(".teacher-answer:first").remove();
         }
         rating = parseFloat(parseFloat(rating).toFixed(1));
+        $('.change-badge').children('.badge').text(rating);
         alert(rating);
         $.post("/php/checkanswer.php", {
             sendrating: rating,
